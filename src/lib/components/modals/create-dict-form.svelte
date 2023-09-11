@@ -1,0 +1,54 @@
+<script>
+  import ModalBody from "./components/modal-body.svelte"
+  import ModalHeader from "./components/modal-header.svelte"
+  import {getContext} from "svelte"
+  import {Dictionary} from '$lib/utils/idb/models'
+
+  const {close: closeModal} = getContext("modals-root")
+  let dictName = ""
+  let dictDescription = ""
+  const createDictionary = async () => {
+    const dict = {
+      name: dictName,
+      description: dictDescription,
+      words: []
+    }
+    const dictToCreate = new Dictionary(dict)
+    const result = await Dictionary.create(dictToCreate)
+    closeModal(result)
+  }
+</script>
+
+<ModalBody>
+  <ModalHeader class="{'bg-amber-200'}">
+    <span>
+      create new dict
+    </span>
+
+    <button
+        type="button"
+        class="cursor-pointer"
+        on:click|stopPropagation={() => closeModal()}
+    >
+      X
+    </button>
+  </ModalHeader>
+
+  <div class="bg-amber-300 w-full h-full">
+    <form on:submit={() => createDictionary()}>
+      <label class="block">
+        <span>the dict's name</span>
+        <input
+            bind:value={dictName}
+            type="text"
+            name="name"
+            placeholder="Name"
+        >
+      </label>
+
+      <button>
+        create
+      </button>
+    </form>
+  </div>
+</ModalBody>
