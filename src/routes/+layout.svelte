@@ -1,6 +1,6 @@
 
 <script lang="ts">
-  import "$/style/base/1index.scss"
+  import "../style/base/1index.scss"
   import ModalsRoot from '$lib/components/modals/components/modals-root.svelte'
   import TheHeader from "$lib/components/the-header.svelte"
   import IdbManager from "$lib/utils/idb/IdbManager"

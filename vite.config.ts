@@ -1,8 +1,7 @@
-import { fileURLToPath } from 'node:url'
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
+import { sveltekit } from '@sveltejs/kit/vite'
+import { defineConfig } from 'vitest/config'
 
-const dirname = fileURLToPath(new URL('./src', `${ import.meta.url }`))
+// const dirname = fileURLToPath(new URL('./src', `${ import.meta.url }`))
 let PORT = 3000
 
 if (process.env.PORT) {
@@ -21,9 +20,4 @@ export default defineConfig({
     port: PORT,
     host: '0.0.0.0'
   },
-  resolve: {
-    alias: {
-      "$": dirname,
-    }
-  }
-});
+})
