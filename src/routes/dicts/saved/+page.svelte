@@ -1,13 +1,16 @@
 
 <script>
   import AlphabetWordList from "$lib/components/lists/alphbet-word-list.svelte"
+  import {Word} from "$lib/utils/idb/models"
+  import {onMount} from "svelte"
 
-  /** @type {import('./$types').PageData} */
-  export let data
+  let list = []
 
-  $: console.log("data ->", data)
+  onMount(async () => {
+    list = await Word.getAll()
+  })
 </script>
 
 <section>
-  <AlphabetWordList wordList={data.wordList} />
+  <AlphabetWordList wordList={list} />
 </section>

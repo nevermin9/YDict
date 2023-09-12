@@ -1,6 +1,10 @@
-<script>
-  /** @type {import('./$types').PageData} */
-  export let data
+<script lang="ts">
+  import {onMount} from "svelte"
+  import {Dictionary} from "$lib/utils/idb/models"
+
+  onMount(() => {
+
+  })
 
 </script>
 

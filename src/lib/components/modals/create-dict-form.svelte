@@ -35,7 +35,7 @@
   </ModalHeader>
 
   <div class="bg-amber-300 w-full h-full">
-    <form on:submit={() => createDictionary()}>
+    <form on:submit|preventDefault={() => createDictionary()}>
       <label class="block">
         <span>the dict's name</span>
         <input

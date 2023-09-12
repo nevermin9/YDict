@@ -1,4 +1,4 @@
-// import IdbManager from "$lib/utils/idb/IdbManager"
+import {IdbManager} from "$lib/utils/idb"
 import type {IDictionary} from "$lib/types"
 
 export default class Dictionary implements IDictionary {
@@ -17,16 +17,16 @@ export default class Dictionary implements IDictionary {
     this.words = words
   }
 
-  // static create(dict: string) {
-    // return IdbManager.insert(Dictionary.objectStoreName, dict)
-  // }
+  static create(dict: IDictionary) {
+    return IdbManager.insert(this.STORE_NAME, dict)
+  }
 
-  // static getAll() {
-    // return IdbManager.getAll(this.objectStoreName)
-  // }
+  static getAll(): Promise<IDictionary[]> {
+    return IdbManager.getAll(this.STORE_NAME) as Promise<IDictionary[]>
+  }
 
-  // static async getAllDictsNames() {
-    // const dicts = await this.getAll()
-    // return dicts.map((dict: IDictionary) => dict.name)
-  // }
+  static async getAllDictsNames() {
+    const dicts = await this.getAll()
+    return dicts.map((dict: IDictionary) => dict.name)
+  }
 }

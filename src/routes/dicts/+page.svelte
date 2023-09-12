@@ -8,7 +8,6 @@
 
   const openFormCreateDict = async () => {
     const result = await open({ name: 'create-dict-form' })
-    console.log ("dicts page openFormCreateDict result", result)
 
     if (result) {
       dictsNames = [...dictsNames, result]

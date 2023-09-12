@@ -2,7 +2,7 @@ export interface IWord {
   word: string
   dicts: string[]
   cards: string[]
-  // data: IWordApiData;
+  data: WordApiData
 }
 
 export type WordDefinition = {

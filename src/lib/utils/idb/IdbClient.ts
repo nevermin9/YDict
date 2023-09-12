@@ -33,7 +33,7 @@ export default class IdbClient {
     }
 
     async #createObjectStores(objectStores: ObjectStoreConfigs): Promise<IdbClient> {
-        let promises = []
+        const promises: Promise<IdbClient>[] = []
         for (const [name, config] of objectStores) {
             const store = this._db!.createObjectStore(name, config)
             console.log("looop")
@@ -53,11 +53,20 @@ export default class IdbClient {
                 this._db.onerror = this.#onError
                 return this.#createObjectStores(configs).then(() => resolve(this)).catch(reject)
             }
+            request.onsuccess = (event) => {
+                this._db = (event.target as IDBOpenDBRequest).result
+                this._db.onerror = this.#onError
+                resolve(this)
+            }
             request.onerror = (event) => {
                 this.#onError(event)
                 reject(event)
             }
         })
+    }
+
+    startTransaction(storeName: string, mode: IDBTransactionMode = "readonly"): Promise<IDBObjectStore> {
+        return Promise.resolve(this._db!.transaction(storeName, mode).objectStore(storeName))
     }
 
     // throwErr() {

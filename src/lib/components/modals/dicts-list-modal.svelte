@@ -17,9 +17,7 @@
   })
 
   const closeModal = async () => {
-    close({
-      result: selectedDicts.filter(d => d !== "saved"),
-    })
+    close(selectedDicts.filter(d => d !== "saved"))
   }
 </script>
 

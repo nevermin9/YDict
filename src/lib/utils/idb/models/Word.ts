@@ -1,9 +1,9 @@
-// import IdbManager from "$lib/utils/idb/IdbManager"
-import type {ObjectStoreConfig, IWord} from "$lib/types"
+import {IdbManager} from "$lib/utils/idb"
+import type {ObjectStoreConfig, IWord, WordApiData} from "$lib/types"
 
 export default class Word implements IWord {
   word: string
-  // private data: IWordApiData,
+  data: WordApiData
   dicts: string[]
   cards: string[]
 
@@ -12,17 +12,18 @@ export default class Word implements IWord {
     keyPath: "word"
   }
 
-  constructor({word, dicts, cards}: IWord) {
+  constructor({word, dicts, data, cards = []}: IWord) {
     this.word = word
     this.dicts = dicts
     this.cards = cards
+    this.data = data
   }
 
-  // static async save(word: string) {
-  //   return IdbManager.insert(this.STORE_NAME, word)
-  // }
-  //
-  // static async getAll() {
-  //   return IdbManager.getAll(this.STORE_NAME)
-  // }
+  static async save(word: string) {
+    return await IdbManager.insert(this.STORE_NAME, word)
+  }
+
+  static async getAll(): Promise<Word[]> {
+    return await IdbManager.getAll(this.STORE_NAME) as Promise<Word[]>
+  }
 }

@@ -17,35 +17,79 @@ export default class IdbManager {
     let _c: IdbClient = new IdbClient(name, version)
     _c = await _c.createClient(configs)
     setClient(_c)
+    console.log("init db", getClient())
   }
 
-  static async getDB() {
-    const check = () => {
-      return new Promise(resolve => {
-        const db = getClient()?.db
+  static async #getDB(): Promise<IdbClient> {
+    const check = (resolve: (v: IdbClient) => void)  => {
+      const db = getClient()?.db
 
-        if (!db) {
-          requestAnimationFrame(check)
-        }
+      if (!db) {
+        console.log("no db get it")
+        requestAnimationFrame(check.bind(null, resolve))
+      }
 
-        resolve(db)
-      })
+      console.log("here is db")
+      return resolve(getClient() as IdbClient)
     }
 
     if (!getClient()?.db) {
-      return await this.queue.process("get-db-client", () => check())
+      console.log("no db get it")
+      const _client = await this.queue.process(
+        "get-db-client",
+        () => new Promise(
+          resolve => check(resolve)
+      // resolve => requestAnimationFrame(check.bind(null, resolve))
+        )) as Promise<IdbClient>
+      console.log("_client", _client)
+      return _client
     }
 
-    return getClient()!.db
+    return getClient() as IdbClient
   }
 
-  // static async insert(storeName, data) {
-  //   return _client.insert(storeName, data)
-  // }
+  static async insert<T>(storeName: string, data: T): Promise<T> {
+    try {
+      const db = await this.#getDB()
+
+      return new Promise((resolve, reject) => {
+        return db.startTransaction(storeName, "readwrite")
+          .then(store => {
+            const request = store.add(data)
+            request.onsuccess = e => {
+              resolve((e.target as IDBRequest).result as T)
+            }
+            request.onerror = e_1 => {
+              reject(e_1)
+            }
+          })
+      })
+    } catch (err) {
+      return Promise.reject(err)
+    }
+  }
   //
-  // static async getAll(storeName) {
-  //   return _client.getAll(storeName)
-  // }
+  static async getAll(storeName: string, options?: {count?: number, query?: string | IDBKeyRange}) {
+    try {
+      const db = await this.#getDB()
+      console.log("db", db)
+      return new Promise((resolve, reject) => {
+        return db.startTransaction(storeName, "readonly")
+          .then(store => {
+            const request = store.getAll(options?.query, options?.count)
+            request.onsuccess = e => {
+              resolve((e.target as IDBRequest).result)
+            }
+            request.onerror = e_1 => {
+              reject(e_1)
+            }
+          })
+      })
+
+    } catch (err) {
+      return Promise.reject(err)
+    }
+  }
   //
   // static async get(storeName, key) {
   //   return _client.get(storeName, key)

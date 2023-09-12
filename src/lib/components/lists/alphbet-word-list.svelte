@@ -1,5 +1,7 @@
-<script>
-  export let wordList = []
+<script lang="ts">
+  import type {IWord} from "$lib/types"
+
+  export let wordList: IWord[] = []
 
   const createDict = (dict, current) => {
     const firstLetter = current.word[0].toUpperCase()

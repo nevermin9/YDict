@@ -6,13 +6,13 @@ import type {PageLoad} from "./$types"
 
 export const load: PageLoad = async ({url}) => {
   const search = url.searchParams.get ('search')
+
   if (!search) {
     throw redirect(307, '/')
   }
 
-  console.log({name: "search", search})
-  // if there is no search query, return 404
   let wordData
+
   try {
     wordData = await api.word.getWord(search || '')
   } catch(e) {
@@ -23,6 +23,7 @@ export const load: PageLoad = async ({url}) => {
       }
     }
 
+    throw e
   }
 
   return {

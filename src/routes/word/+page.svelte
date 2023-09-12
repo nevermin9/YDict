@@ -13,18 +13,17 @@
   const {open} = getContext("modals-root")
 
   const saveWord = dicts => {
-    const wordData = copyObj(data.wordData)
-    const word = wordData.word
-    delete wordData.word
-    wordData.results = wordData.results.filter(def => {
+    const wordDataCopy = copyObj(data.wordData)
+    const word = wordDataCopy.word
+    delete wordDataCopy.word
+    wordDataCopy.results = wordDataCopy.results.filter(def => {
       return selectedDefs.includes(def.definition)
     })
     const wordToSave = new Word({
       word,
       dicts,
-      data: wordData,
+      data: wordDataCopy,
     })
-    console.log ("wordToSave --->", wordToSave)
 
     return Word.save(wordToSave)
   }

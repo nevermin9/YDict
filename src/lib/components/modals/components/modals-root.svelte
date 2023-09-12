@@ -35,15 +35,6 @@
     open,
     close: (...args) => resolve(...args),
   })
-  onMount(() => {
-    console.log('modals-root mounted')
-  })
-  afterUpdate(() => {
-    console.log('modals-root updated')
-  })
-  beforeUpdate(() => {
-    console.log('modals-root beforeUpdate')
-  })
 </script>
 
 <!--app entry-->

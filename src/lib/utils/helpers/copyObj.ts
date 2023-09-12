@@ -3,7 +3,7 @@
  * @param {Object} target - the object to copy
  * @returns {Object} copy - copy of the object
  */
-export function copyObj(target) {
+export function copyObj<T>(target: T): T {
   if (!target) {
     console.trace ("[copyObj]: target is undefined or null, target: ", target)
     return target
