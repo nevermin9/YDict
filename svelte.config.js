@@ -4,7 +4,7 @@ import adapter from '@sveltejs/adapter-auto'
 import {vitePreprocess} from '@sveltejs/kit/vite'
 
 // @ts-ignore
-const dirname = fileURLToPath(new URL('./src', `${ import.meta.url }`))
+const dirname = fileURLToPath(new URL('.', `${ import.meta.url }`))
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -18,7 +18,7 @@ const config = {
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: adapter(),
     alias: {
-      "$api/": resolve(dirname, "./src/api"),
+      "$api": resolve(dirname, "./src/api"),
     }
   }
 }

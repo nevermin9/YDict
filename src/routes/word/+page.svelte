@@ -30,16 +30,17 @@
   }
 
   const openDictListModal = () => {
-    open({
+    return open({
       name: 'dicts-list-modal',
-      onClose({result: selectedDicts}) {
-        return saveWord(selectedDicts)
+    }).then(dicts => {
+      if (dicts) {
+        return saveWord(dicts)
       }
     })
   }
 
-  const addToDict = () => {
-    openDictListModal()
+  const addToDict = async () => {
+    await openDictListModal()
   }
 </script>
 

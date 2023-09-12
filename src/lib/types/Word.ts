@@ -5,7 +5,7 @@ export interface IWord {
   // data: IWordApiData;
 }
 
-export type IWordDefinition = {
+export type WordDefinition = {
   definition: string
   hasTypes: string[]
   partOfSpeech: string
@@ -14,17 +14,27 @@ export type IWordDefinition = {
 }
 
 // translate bc
-export type IWordApiData = {
+export type WordApiData = {
   frequency?: number
   pronunciation: {
     all: string
   };
   // separate type
-  results: IWordDefinition[],
+  results: WordDefinition[],
   syllables?: {
     count: number
     list: string[]
   }
 }
 
+export type WordSearchParams = {
+  search: string
+  limit: number
+  options: RequestInit & {
+    params?: {
+      letterPattern: string
+      limit: number
+    }
+  }
+}
 

@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import Loader from '$lib/components/loader.svelte'
-  import {debounce} from 'lodash-es'
-  import wordsApi from "$lib/words-api"
+  import {debounce} from "lodash-es"
+  import api from "$api"
 
   let search = ''
   let searchResult = []
@@ -18,7 +18,7 @@
 
     const signal = abortController.signal
 
-    p = wordsApi.searchForTheWords({
+    p = await api.word.search({
       search,
       limit: 10,
       options: {
