@@ -1,15 +1,14 @@
-<script>
+<script lang="ts">
   import {getContext} from 'svelte'
   import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
   import WordDef from '$lib/components/word-def/word-def.svelte'
   import {Word} from '$lib/utils/idb/models'
   import {copyObj} from '$lib/utils/helpers'
+  import type { PageData } from "./$types"
 
-  /** @type import('./$types').PageData*/
-  export let data
+  export let data: PageData
 
-  /** @type string[]*/
-  let selectedDefs = []
+  let selectedDefs: string[] = []
 
   const {open} = getContext("modals-root")
 

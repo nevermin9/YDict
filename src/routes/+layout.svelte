@@ -13,6 +13,7 @@
 
   const createIndexedDB = async () => {
     try {
+      console.log('createIndexedDB', isDbCreated)
       await IdbManager.init(
         PUBLIC_IDB_NAME,
         PUBLIC_IDB_VERSION,
@@ -23,6 +24,7 @@
         ]),
       )
       isDbCreated = true
+      console.log('createIndexedDB 2', isDbCreated)
     } catch (e) {
       console.error(e)
     }
@@ -33,7 +35,7 @@
 </script>
 
 <ModalsRoot>
-  {#if !isDbCreated}
+  {#if isDbCreated}
     <div id="notify-block"
          class="absolute top-1/2 left-1/2 width[100px] height[100px] bg-red-500"
     >

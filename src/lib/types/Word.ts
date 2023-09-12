@@ -1,27 +1,29 @@
 export interface IWord {
-  word: string;
-  dicts: string[];
-  cards: string[];
+  word: string
+  dicts: string[]
+  cards: string[]
   // data: IWordApiData;
 }
 
+export type IWordDefinition = {
+  definition: string
+  hasTypes: string[]
+  partOfSpeech: string
+  synonyms: string[]
+  typeOf: string[]
+}
+
 // translate bc
-export interface IWordApiData {
-  frequency: number;
+export type IWordApiData = {
+  frequency?: number
   pronunciation: {
-    all: string;
+    all: string
   };
   // separate type
-  results: {
-    definition: string;
-    hasTypes: string[];
-    partOfSpeech: string;
-    synonyms: string[];
-    typeOf: string[];
-  },
-  syllables: {
-    count: number;
-    list: string[];
+  results: IWordDefinition[],
+  syllables?: {
+    count: number
+    list: string[]
   }
 }
 

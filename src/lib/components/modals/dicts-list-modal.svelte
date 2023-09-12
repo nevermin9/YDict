@@ -2,7 +2,7 @@
   import {getContext, onMount} from 'svelte'
   import ModalBody from "./components/modal-body.svelte"
   import ModalHeader from "./components/modal-header.svelte"
-  import Dictionary from '$lib/utils/idb/models/Dictionary.js'
+  import {Dictionary} from '$lib/utils/idb/models'
 
   const {close} = getContext("modals-root")
   let dictsNames = []

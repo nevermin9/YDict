@@ -1,7 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig } from 'vitest/config'
 
-// const dirname = fileURLToPath(new URL('./src', `${ import.meta.url }`))
 let PORT = 3000
 
 if (process.env.PORT) {

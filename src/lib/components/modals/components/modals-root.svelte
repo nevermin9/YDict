@@ -5,7 +5,7 @@
   }
 </script>
 
-<script>
+<script lang="ts">
   import {setContext, onMount, afterUpdate, beforeUpdate} from 'svelte'
 
   let name = ''

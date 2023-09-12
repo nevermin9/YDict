@@ -9,17 +9,20 @@ const options = {
 
 class HttpClient {
   static LOG_PREFIX = '[HttpClient]'
+  private baseUrl: string
+  private options: RequestInit
 
-  constructor(baseUrl, options) {
-    this.baseUrl = baseUrl;
-    this.options = options;
-    this.onErrorHandler = options.onErrorHandler || (() => {
-    });
+
+  constructor(baseUrl: string, options: RequestInit) {
+    this.baseUrl = baseUrl
+    this.options = options
+    // this.onErrorHandler = options.onErrorHandler || (() => {
+    // });
   }
 
-  async #makeRequest(url, method, options) {
+  async #makeRequest(url: string, method: string, options: RequestInit & {params?: Record<string, string>}) {
     if (!url?.length) {
-      throw new Error ('url is required');
+      throw new Error ('url is required')
     }
 
     const link = new URL(url, this.baseUrl)
@@ -36,23 +39,19 @@ class HttpClient {
       })
 
       if (!res.ok) {
-        throw new HTTPResponseError (res);
+        throw new HTTPResponseError (res)
       }
 
       return res
     } catch (error) {
-      this.onErrorHandler (error)
-      // if (isDev) {
-
       console.error (`${HttpClient.LOG_PREFIX}`, error)
-      // }
-      throw error;
+      throw error
     }
   }
 
-  async get(url, options = {}) {
+  async get(url: string, options: RequestInit & {params?: Record<string, string>} = {}) {
     return this.#makeRequest(url, "GET", options)
   }
 }
 
-export default new HttpClient ('https://wordsapiv1.p.rapidapi.com', options);
+export default new HttpClient ('https://wordsapiv1.p.rapidapi.com', options)
