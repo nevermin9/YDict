@@ -19,11 +19,15 @@ export default class Word implements IWord {
     this.data = data
   }
 
-  static async save(word: string) {
-    return await IdbManager.insert(this.STORE_NAME, word)
+  static save(word: string) {
+    return IdbManager.insert(this.STORE_NAME, word)
   }
 
-  static async getAll(): Promise<Word[]> {
-    return await IdbManager.getAll(this.STORE_NAME) as Promise<Word[]>
+  static getAll(): Promise<Word[]> {
+    return IdbManager.getAll(this.STORE_NAME) as Promise<Word[]>
+  }
+
+  static get(word: string): Promise<Word> {
+    return IdbManager.get<Word>(this.STORE_NAME, word)
   }
 }

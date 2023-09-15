@@ -1,8 +1,8 @@
 <script lang="ts">
   import {onMount} from "svelte"
-  import {Dictionary} from "$lib/utils/idb/models"
 
   onMount(() => {
+    console.log("onMount")
 
   })
 

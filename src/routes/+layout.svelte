@@ -12,8 +12,8 @@
   let isDbCreated = false
 
   const createIndexedDB = async () => {
+    console.log('createIndexedDB mounted')
     try {
-      console.log('createIndexedDB', isDbCreated)
       await IdbManager.init(
         PUBLIC_IDB_NAME,
         PUBLIC_IDB_VERSION,
@@ -24,7 +24,6 @@
         ]),
       )
       isDbCreated = true
-      console.log('createIndexedDB 2', isDbCreated)
     } catch (e) {
       console.error(e)
     }

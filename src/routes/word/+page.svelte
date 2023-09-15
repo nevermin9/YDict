@@ -1,7 +1,9 @@
 <script lang="ts">
   import {getContext} from 'svelte'
-  import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
-  import WordDef from '$lib/components/word-def/word-def.svelte'
+  // import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
+  import WordTitle from "$lib/components/word-def/word-title.svelte"
+  import WordDefsList from "$lib/components/word-def/defs-list.svelte"
+  // import WordDef from '$lib/components/word-def/word-def.svelte'
   import {Word} from '$lib/utils/idb/models'
   import {copyObj} from '$lib/utils/helpers'
   import type { PageData } from "./$types"
@@ -44,32 +46,32 @@
 </script>
 
 <section>
-  <h1
-      class="text-3xl w-full px-2 pt-1 pb-2 bg-slate-300 shadow-md shadow-black"
-  >
-    {data.wordData.word}
-  </h1>
+  <WordTitle
+      class="mb-4"
+      word="{data.wordData.word}"
+      pronunciation="{data.wordData?.pronunciation?.all}"
+  />
 
-  <h2
-      class="text-xl mb-3"
-  >
-    <i>
-      {data.wordData?.pronunciation?.all}
-    </i>
-  </h2>
+  <WordDefsList
+      class="px-2"
+      bind:selectedDefs="{selectedDefs}"
+      definitions="{data.wordData?.results}"
+  />
 
-  {#each data.wordData?.results as result, i (i)}
-    <CheckboxContent
-        value={result.definition}
-        bind:group={selectedDefs}
-        class="block mb-2"
-    >
-      <WordDef
-          wordDefinition="{result}"
-      />
+  <!--{#each data.wordData?.results as result, i (i)}-->
+  <!--  <CheckboxContent-->
+  <!--      value={result.definition}-->
+  <!--      bind:group={selectedDefs}-->
+  <!--      class="block mb-2"-->
+  <!--  >-->
+  <!--    <WordDef-->
+  <!--        wordDefinition="{result}"-->
+  <!--    />-->
 
-    </CheckboxContent>
-  {/each}
+  <!--  </CheckboxContent>-->
+  <!--{:else }-->
+  <!--    <p>no results</p>-->
+  <!--{/each}-->
 
   <div>
     <button

@@ -6,7 +6,7 @@ export default class QueueController {
   queue: Map<string, Promise<any>> = new Map
   //
   private addQueueItem(key: string, cb: Callback, resolve: Resolve, reject: Reject) {
-    this.queue
+    return this.queue
         .set(key, cb())
         .get(key)!.then(resolve).catch(reject).finally(() => {
           this.queue.delete(key)
@@ -20,7 +20,7 @@ export default class QueueController {
         return resolve(queueItem)
       }
 
-      this.addQueueItem(key, cb, resolve, reject)
+      return this.addQueueItem(key, cb, resolve, reject)
     })
   }
 }

@@ -22,14 +22,14 @@
     if (checked) {
       if (index < 0) {
         group.push(value)
-        group = group
       }
     } else {
       if (index >= 0) {
         group.splice(index, 1)
-        group = group
       }
     }
+
+    group = group
   }
 
 </script>

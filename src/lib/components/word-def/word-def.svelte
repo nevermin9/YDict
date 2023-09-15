@@ -1,7 +1,9 @@
-<script>
-  export let wordDefinition = {};
-  let clazz = '';
-  export { clazz as class };
+<script lang="ts">
+  import type {WordDefinition} from "$lib/types"
+
+  export let wordDefinition: WordDefinition = {}
+  let clazz = ''
+  export { clazz as class }
 </script>
 
 <article class="{clazz} w-full bg-slate-300 px-2 shadow-md shadow-black">

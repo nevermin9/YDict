@@ -11,6 +11,7 @@ export type WordDefinition = {
   partOfSpeech: string
   synonyms: string[]
   typeOf: string[]
+  derivation: string[]
 }
 
 // translate bc
