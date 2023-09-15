@@ -2,7 +2,7 @@
   let clazz = ''
 	export let value = '';
   export let checked = false
-  export let group = null
+  export let group = []
 
   export { clazz as class }
 
