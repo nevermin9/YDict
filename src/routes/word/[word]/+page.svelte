@@ -1,31 +1,47 @@
 <script lang="ts">
-  import type {PageData} from "./$types"
   import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
   import WordDef from '$lib/components/word-def/word-def.svelte'
   import WordTitle from '$lib/components/word-def/word-title.svelte'
 
-  export let data: PageData
-  let selectedDefs = []
+  export let data
+  let selectedDefs: string[] = []
+
+  const generateExample = async () => {
+    const result = await fetch(`/api/create-sentence?with=${data.wordData.word}`).then(r => r.json())
+
+    console.log("the result", result)
+  }
 </script>
 
 <section>
-  <WordTitle
-      class="mb-4"
-      word="{data.wordData.word}"
-      pronunciation="{data.wordData.data?.pronunciation?.all}"
-  />
+  {#if !data?.wordData?.word }
+    <p class="text-center">No definitions found</p>
+  {:else}
+    <WordTitle
+        class="mb-4"
+        word="{data.wordData.word}"
+        pronunciation="{data.wordData.data?.pronunciation?.all}"
+    />
 
-  {#each data.wordData?.data.results as result, i (i)}
-    <CheckboxContent
-        value={result.definition}
-        bind:group={selectedDefs}
-        class="flex gap-2 max-w-screen-md m-auto mb-2"
+    <button
+        type="button"
+        on:click={() => generateExample()}
     >
-      <WordDef
-          wordDefinition="{result}"
-      />
-    </CheckboxContent>
-  {/each}
+      generate
+    </button>
+
+    {#each data.wordData?.data.results as result, i (i)}
+      <CheckboxContent
+          value={result.definition}
+          bind:group={selectedDefs}
+          class="flex gap-2 max-w-screen-md m-auto mb-2"
+      >
+        <WordDef
+            wordDefinition="{result}"
+        />
+      </CheckboxContent>
+    {/each}
+  {/if}
 
   <div>
 <!--    <button-->
