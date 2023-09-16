@@ -81,7 +81,7 @@
         type="button"
         on:click={() => addToDict()}
     >
-      <span class="uppercase">
+      <span class="text-deepblue-500 uppercase">
         add to dict
       </span>
     </SButton>
@@ -89,7 +89,7 @@
     <SButton
         type="button"
     >
-      <span class="uppercase">
+      <span class="text-deepblue-500 uppercase">
         add to card group
       </span>
     </SButton>

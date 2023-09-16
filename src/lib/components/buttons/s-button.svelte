@@ -6,6 +6,7 @@
 </script>
 
 <button
+    on:click
     class="px-3 py-1 clickable-{theme} {clazz}"
     {type}
 >

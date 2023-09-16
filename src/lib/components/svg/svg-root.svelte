@@ -6,7 +6,15 @@
 </script>
 
 
-<svg width={width} height={height} class="{clazz}" viewBox="0 0 16 16">
+<svg width={width} height={height} class="{clazz}">
   <slot />
 </svg>
+
+<style>
+  :global(svg) {
+    fill: currentColor;
+    display: inline-block;
+    vertical-align: middle;
+  }
+</style>
 
