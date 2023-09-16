@@ -2,6 +2,7 @@
   import {getContext, onMount} from 'svelte'
   import ModalBody from "./components/modal-body.svelte"
   import ModalHeader from "./components/modal-header.svelte"
+  import ModalContent from "./components/modal-content.svelte"
   import {Dictionary} from '$lib/utils/idb/models'
   import SButton from "$lib/components/buttons/s-button.svelte"
 
@@ -24,14 +25,14 @@
 
 <ModalBody class="bg-sand-300 rounded">
   <ModalHeader>
-    <span class="text-deepblue-500">
-      Choose dictionaries to save in
+    <span class="text-deepblue-500 text-2xl">
+      Choose dictionaries
     </span>
   </ModalHeader>
 
-  <section class="flex-1 flex flex-col justify-between">
+  <ModalContent class="flex flex-col justify-between">
     <div class="m-auto max-h-[250px] h-full">
-      <ul class="grid items-center gap-1 h-full pr-4 overflow-auto">
+      <ul class="grid auto-rows-min items-center gap-1 h-full pr-4 overflow-auto">
         <li>
           <label class="inline-block px-3 py-1 clickable-light" for="saved">
             <input
@@ -69,10 +70,9 @@
           </li>
         {/each}
       </ul>
-
     </div>
 
-    <div class="flex p-1 pb-2">
+    <div class="flex p-1">
       <SButton
           class="m-auto shadow-md"
           on:click={() => closeModal()}
@@ -82,6 +82,6 @@
         </span>
       </SButton>
     </div>
-  </section>
+  </ModalContent>
 </ModalBody>
 

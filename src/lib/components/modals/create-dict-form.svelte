@@ -1,8 +1,10 @@
 <script>
   import ModalBody from "./components/modal-body.svelte"
   import ModalHeader from "./components/modal-header.svelte"
+  import ModalContent from "./components/modal-content.svelte"
   import {getContext} from "svelte"
   import {Dictionary} from '$lib/utils/idb/models'
+  import SButton from "$lib/components/buttons/s-button.svelte"
 
   const {close: closeModal} = getContext("modals-root")
   let dictName = ""
@@ -19,26 +21,25 @@
   }
 </script>
 
-<ModalBody>
-  <ModalHeader class="{'bg-amber-200'}">
-    <span>
-      create new dict
+<ModalBody class="bg-sand-300 rounded">
+  <ModalHeader>
+    <span class="text-deepblue-500 text-2xl">
+      Create dictionary
     </span>
-
-    <button
-        type="button"
-        class="cursor-pointer"
-        on:click|stopPropagation={() => closeModal()}
-    >
-      X
-    </button>
   </ModalHeader>
 
-  <div class="bg-amber-300 w-full h-full">
-    <form on:submit|preventDefault={() => createDictionary()}>
-      <label class="block">
-        <span>the dict's name</span>
+  <ModalContent>
+    <form
+        class="flex flex-col h-full w-full"
+        on:submit|preventDefault={() => createDictionary()}
+    >
+      <label class="m-auto flex flex-col">
+        <span class="text-deepblue-500 text-xl">
+          The name of the dictionary:
+        </span>
+
         <input
+            class="text-deepblue-500 bg-transparent outline-0 border-b-2 border-deepblue-500"
             bind:value={dictName}
             type="text"
             name="name"
@@ -46,9 +47,14 @@
         >
       </label>
 
-      <button>
-        create
-      </button>
+      <SButton
+          class="shadow-md"
+          type="submit"
+      >
+        <span class="uppercase text-deepblue-500">
+          create
+        </span>
+      </SButton>
     </form>
-  </div>
+  </ModalContent>
 </ModalBody>

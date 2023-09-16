@@ -40,6 +40,7 @@ export default class IdbManager {
       const _client = await this.queue.process(
         "get-db-client",
         () => new Promise(resolve => check(resolve))) as Promise<IdbClient>
+
       console.log("_client", _client)
       return _client
     }
