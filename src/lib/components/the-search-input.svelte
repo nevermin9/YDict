@@ -1,5 +1,6 @@
 <script lang="ts">
   import Loader from '$lib/components/loader.svelte'
+  import SButton from "$lib/components/buttons/s-button.svelte"
   import {debounce} from "lodash-es"
   import api from "$api"
 
@@ -67,7 +68,7 @@
         <li
             class="
             flex
-            py-2 px-0.5 bg-gray-400 mb-1 rounded"
+            py-2 px-0.5 clickable-light mb-1 rounded"
         >
           <a
               class="block w-full flex-1"
@@ -75,21 +76,21 @@
           >
             {word}
           </a>
-          <button
-              class="flex-shrink-0"
-              type="button"
-              title="add to clipboard"
-          >
-            s
-          </button>
+<!--          <button-->
+<!--              class="flex-shrink-0"-->
+<!--              type="button"-->
+<!--              title="add to clipboard"-->
+<!--          >-->
+<!--            s-->
+<!--          </button>-->
 
-          <button
-              class="flex-shrink-0"
-              type="button"
-              title="show info"
-          >
-            ->
-          </button>
+<!--          <button-->
+<!--              class="flex-shrink-0"-->
+<!--              type="button"-->
+<!--              title="show info"-->
+<!--          >-->
+<!--            ->-->
+<!--          </button>-->
         </li>
       {/each}
     </ul>
@@ -101,7 +102,7 @@
       method="GET"
       data-name="lookup-form"
       autocomplete="off"
-      class="flex"
+      class="flex gap-2"
   >
     <label
         class="relative
@@ -117,18 +118,21 @@
       <input
           type="text"
           name="search"
-          class="bg-transparent outline-0 border-b-2 border-slate-900"
+          class="text-deepblue-500 bg-transparent outline-0 border-b-2 border-deepblue-500"
           bind:value={search}
       >
     </label>
 
-    <button
-        class="font-bold text-lg"
+    <SButton
         data-name="lookup-button"
         type="submit"
     >
-      Lookup
-    </button>
+        <span
+            class="text-deepblue-500 font-bold text-lg uppercase"
+        >
+          lookup
+        </span>
+    </SButton>
   </form>
 </div>
 

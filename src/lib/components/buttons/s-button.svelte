@@ -1,17 +1,13 @@
 <script>
-  export let type = 'button';
-  export let color = 'primary';
+  export let type = "button";
+  export let theme = "light"
   let clazz
   export {clazz as class}
 </script>
 
 <button
-    class="{clazz}"
+    class="px-3 py-1 clickable-{theme} {clazz}"
     {type}
 >
-  <span
-      class=""
-  >
     <slot />
-  </span>
 </button>

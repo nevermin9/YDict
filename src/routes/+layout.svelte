@@ -1,6 +1,6 @@
 
 <script lang="ts">
-  import "../style/base/1index.scss"
+  import "$lib/style/index.scss"
   import ModalsRoot from '$lib/components/modals/components/modals-root.svelte'
   import TheHeader from "$lib/components/the-header.svelte"
   import IdbManager from "$lib/utils/idb/IdbManager"
@@ -47,27 +47,32 @@
   {/if}
 
   <div class="flex flex-col h-full">
-    <TheHeader />
+    <TheHeader class="shrink-0" />
 
-    <div class="flex-1 h-full">
+    <div class="flex-1 h-full px-2">
       <slot />
     </div>
   </div>
+
+  <div
+      id="fixed-bottom"
+      class="min-w-min min-h-min"
+  > </div>
 </ModalsRoot>
 
 <style lang="scss">
   :global(html) {
     height: 100%;
     font-family: 'Roboto Slab', serif;
-    background-color: #2b665e;
-    //@apply bg-blue-600 text-slate-900;
+    @apply bg-green-500;
+    //background-color: #81B29A;
+    //#3D405B - deepblue
+    //#E07A5F - terra code (red)
+    // antique white #F4F1DE
+    //muted sage green #81B29A
   }
 
   :global(body) {
-    //display: flex;
-    //flex-direction: column;
-    //min-height: 100vh;
-    //min-height: 100svh;
     height: 100%;
   }
 </style>

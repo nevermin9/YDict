@@ -6,21 +6,21 @@
   export { clazz as class }
 </script>
 
-<article class="{clazz} w-full bg-slate-300 px-2 shadow-md shadow-black">
-  <div class="flex border-b border-slate-600">
-    <p class="basis-1/6a grow-0 shrink-0 px-1 font-bold">
-      {wordDefinition.partOfSpeech}
-    </p>
-
-    <p>
-      {wordDefinition.definition}
-    </p>
-  </div>
-
+<article class="{clazz} w-full bg-sand-300 px-2 shadow-md shadow-black rounded">
   <table>
+    <tr>
+      <td class="italic align-top text-left">
+        {wordDefinition.partOfSpeech}
+      </td>
+
+      <td>
+
+        {wordDefinition.definition}
+      </td>
+    </tr>
     {#if wordDefinition?.synonyms?.length }
       <tr>
-        <th>
+        <th class="align-top text-left">
           synonyms:
         </th>
 
@@ -36,7 +36,7 @@
 
     {#if wordDefinition?.derivation?.length }
       <tr>
-        <th>
+        <th class="align-top text-left">
           derivation:
         </th>
 

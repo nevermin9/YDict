@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  .clickable-light {
+    cursor: pointer;
+    @apply bg-sand-300 border border-deepblue-500 rounded-md;
+  }
+  .bg-orange-100-gradient {
+    background: hsla(34, 100%, 92%, 1);
+    background: linear-gradient(90deg, hsla(34, 100%, 92%, 1) 54%, hsla(0, 0%, 100%, 1) 90%, hsla(0, 0%, 100%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(34, 100%, 92%, 1) 54%, hsla(0, 0%, 100%, 1) 90%, hsla(0, 0%, 100%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(34, 100%, 92%, 1) 54%, hsla(0, 0%, 100%, 1) 90%, hsla(0, 0%, 100%, 1) 100%);
+  }
+}

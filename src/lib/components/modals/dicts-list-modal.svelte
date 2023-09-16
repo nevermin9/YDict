@@ -24,8 +24,6 @@
 <ModalBody class="bg-blue-700">
   <ModalHeader>
     select dicts to add the word
-
-    <button on:click={() => close()}>X</button>
   </ModalHeader>
 
   <section>

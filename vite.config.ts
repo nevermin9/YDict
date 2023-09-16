@@ -19,4 +19,11 @@ export default defineConfig({
     port: PORT,
     host: '0.0.0.0'
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "src/lib/style/base";`
+      }
+    }
+  }
 })
