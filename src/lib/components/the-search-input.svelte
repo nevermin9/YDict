@@ -130,7 +130,7 @@
         <span
             class="text-deepblue-500 font-bold text-lg uppercase"
         >
-          lookup
+          look up
         </span>
     </SButton>
   </form>

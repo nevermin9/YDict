@@ -7,6 +7,10 @@
   .clickable-light {
     cursor: pointer;
     @apply bg-sand-300 border border-deepblue-500 rounded-md;
+
+    &[disabled] {
+      @apply opacity-60 cursor-not-allowed;
+    }
   }
   .bg-orange-100-gradient {
     background: hsla(34, 100%, 92%, 1);

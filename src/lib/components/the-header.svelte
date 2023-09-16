@@ -73,7 +73,7 @@
             >
               <SvgRoot
                   class="the-header__svg-root"
-                  width="2em" height="2em">
+                  width="24" height="24">
                 <svelte:component this="{item.icon}"/>
               </SvgRoot>
 
