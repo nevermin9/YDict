@@ -1,5 +1,7 @@
 <script lang="ts">
   import {getContext} from 'svelte'
+  import {teleport} from "$lib/utils/actions"
+  import SButton from "$lib/components/buttons/s-button.svelte"
   // import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
   import WordTitle from "$lib/components/word-def/word-title.svelte"
   import WordDefsList from "$lib/components/word-def/defs-list.svelte"
@@ -53,7 +55,6 @@
   />
 
   <WordDefsList
-      class="px-2"
       bind:selectedDefs="{selectedDefs}"
       definitions="{data.wordData?.results}"
   />
@@ -73,20 +74,24 @@
   <!--    <p>no results</p>-->
   <!--{/each}-->
 
-  <div>
-    <button
-        class="p-3 uppercase bg-blue-900 text-slate-300 rounded-md"
+  <div
+      use:teleport={"fixed-bottom"}
+      class="fixed bottom-0 left-0 flex w-full p-3 justify-around bg-green-500 border-t border-sand-300">
+    <SButton
         type="button"
         on:click={() => addToDict()}
     >
-      add to dict
-    </button>
+      <span class="uppercase">
+        add to dict
+      </span>
+    </SButton>
 
-    <button
-        class="p-3 uppercase bg-blue-900 text-slate-300 rounded-md"
+    <SButton
         type="button"
     >
-      add to card group
-    </button>
+      <span class="uppercase">
+        add to card group
+      </span>
+    </SButton>
   </div>
 </section>

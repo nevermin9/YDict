@@ -5,6 +5,10 @@ export default {
   theme: {
     extend: {
       colors: {
+        // #3e5991
+        green: {
+          500: "#81B29A"
+        },
         gray: {
           400: "#b2c1e0",
         },
@@ -18,6 +22,16 @@ export default {
           900: '#02315E',
           700: '#00457E',
           600: '#2F70AF',
+        },
+        skyblue: {
+          500: "#3e5991",
+          700: "#2b3f66"
+        },
+        deepblue: {
+          500: "#3D405B",
+        },
+        sand: {
+          300: "#F4F1DE"
         }
       },
       zIndex: {

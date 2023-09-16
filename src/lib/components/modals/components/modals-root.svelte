@@ -6,7 +6,7 @@
 </script>
 
 <script lang="ts">
-  import {setContext, onMount, afterUpdate, beforeUpdate} from 'svelte'
+  import {setContext} from 'svelte'
 
   let name = ''
   // eslint-disable-next-line no-unused-vars

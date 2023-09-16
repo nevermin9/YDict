@@ -31,26 +31,35 @@
 <script>
   import SvgRoot from "$lib/components/svg/svg-root.svelte"
 
+  let clazz = ''
+  export {clazz as class}
+
 </script>
 
-<header class="the-header relative h-20">
+<header class="the-header relative h-20 {clazz}">
   <div
-      class="fixed z-7777 top-0 left-1/2 -translate-x-1/2 w-full max-w-md h-20 p-1"
+      class="fixed z-7777 top-0 left-1/2 -translate-x-1/2 w-full max-w-md h-16 p-1 pt-2"
   >
     <nav
-        class="the-header__nav shadow-xl w-full h-full rounded-lg"
+        class="the-header__nav shadow-xl w-full h-full"
     >
       <ul
           class="
         the-header__nav-list
-        grid grid-cols-3 grid-rows-1 gap-1 w-full h-full p-1"
+        grid grid-cols-3 grid-rows-1 gap-1 w-full h-full
+        "
       >
         {#each MENU_ITEMS as item (item.id)}
           <li
               class="
               the-header__nav-list-item
               w-full h-full
-              p-0.5 text-xs bg-gray-400 shadow-md"
+              p-0.5 text-xs
+              rounded
+              border-deepblue-500
+              border
+              bg-sand-300
+              shadow-md"
           >
             <a
                 href="{item.href}"
@@ -59,6 +68,7 @@
                 flex flex-col
                 w-full h-full
                 active:shadow-inner
+                text-deepblue-500
                  items-center justify-center"
             >
               <SvgRoot
@@ -81,23 +91,6 @@
 <style lang="scss">
   .the-header {
     $root: &;
-    $border-radius: .25rem;
-    $border-width: .25rem;
-
-    &__nav {
-      background-color: #3e5991;
-      padding: $border-width;
-      border-radius: calc($border-radius + $border-width);
-    }
-
-    &__nav-list {
-      background-color: #2b3f66;
-      border-radius: $border-radius;
-    }
-
-    &__nav-list-item {
-      border-radius: $border-radius;
-    }
 
     &__nav-list-link:active {
       :global(#{$root}__svg-root) {
