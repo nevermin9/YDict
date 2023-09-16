@@ -77,7 +77,7 @@
                 <svelte:component this="{item.icon}"/>
               </SvgRoot>
 
-              <span class="the-header__link-name text-center">
+              <span class="the-header__link-name font-bold text-center">
                 {item.name}
               </span>
             </a>

@@ -5,9 +5,12 @@
 
 <section
     id="modal-body"
-    class="fixed top-1/2 left-1/2 z-9999
-     flex flex-col max-w-md w-full max-h-96 h-full
-      -translate-x-1/2 -translate-y-1/2
-      bg-gray-400 rounded {clazz}">
-  <slot />
+    class="fixed z-9999 top-0 left-0 h-full w-full p-4
+  flex flex-col justify-center items-center"
+>
+  <div
+      class="flex flex-col max-w-md w-full max-h-96 h-full {clazz}"
+  >
+    <slot />
+  </div>
 </section>

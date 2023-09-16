@@ -1,6 +1,5 @@
 <script lang="ts">
   import type {WordDefinition} from "$lib/types"
-  import WordDefinition from "./word-def.svelte"
   import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
   import WordDef from '$lib/components/word-def/word-def.svelte'
 
