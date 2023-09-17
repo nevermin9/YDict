@@ -1,20 +1,12 @@
-<script context="module">
-  export const MODALS_DIR = "../../modals"
-  export const MODALS_LIST = {
-    DICT_LIST_MODAL: "dicts-list-modal"
-  }
-</script>
-
 <script lang="ts">
   import {setContext} from 'svelte'
 
-  let name = ''
-  // eslint-disable-next-line no-unused-vars
+  type ModalName = 'create-dict-form' | 'dicts-list-modal'
+
+  let name: ModalName = ''
   let data = null
 
-  // let promise = null
   let resolve = () => {}
-  // let reject = () => {}
 
   const reset = () => {
     name = ''
@@ -42,20 +34,20 @@
 
 <!--overlay-->
 {#if name.length > 0}
-  {#await import(/* @vite-ignore */ `${MODALS_DIR}/components/overlay.svelte`) then overlay}
+  {#await import('./components/overlay.svelte') then overlay}
     <svelte:component this={overlay.default} />
   {/await}
 {/if}
 
 <!--modals-->
 {#if name === 'create-dict-form'}
-  {#await import(/* @vite-ignore */ `${MODALS_DIR}/create-dict-form.svelte`) then createDictForm}
+  {#await import('./create-dict-form.svelte') then createDictForm}
     <svelte:component this={createDictForm.default} />
   {/await}
 {/if}
 
-{#if name === MODALS_LIST.DICT_LIST_MODAL}
-  {#await import(/* @vite-ignore */ `${MODALS_DIR}/${MODALS_LIST.DICT_LIST_MODAL}.svelte`) then createDictForm}
+{#if name === "dicts-list-modal"}
+  {#await import('./dicts-list-modal.svelte') then createDictForm}
     <svelte:component this={createDictForm.default} />
   {/await}
 {/if}

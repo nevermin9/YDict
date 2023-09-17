@@ -1,7 +1,7 @@
 
 <script lang="ts">
   import "$lib/style/index.scss"
-  import ModalsRoot from '$lib/components/modals/components/modals-root.svelte'
+  import ModalsRoot from '$lib/components/modals/modals-root.svelte'
   import TheHeader from "$lib/components/the-header.svelte"
 
   export let data
