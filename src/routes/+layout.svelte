@@ -3,11 +3,48 @@
   import "$lib/style/index.scss"
   import ModalsRoot from '$lib/components/modals/modals-root.svelte'
   import TheHeader from "$lib/components/the-header.svelte"
+  import NotifBlock from "$lib/components/notif-block.svelte"
+  import type { Notification } from "$lib/types"
+  import {
+    getFirstNotification,
+    removeFirstNotification,
+    notifications,
+  } from "$lib/store"
+	import { onDestroy } from "svelte";
 
   export let data
+  let openNotificationBlock: (v: Notification) => Promise<void>
+
+  let currentNotif: Notification | null = null
+  const showNotification = async () => {
+    currentNotif = getFirstNotification()
+    await openNotificationBlock(currentNotif)
+      .then(() => {
+        removeFirstNotification()
+        return showNotification()
+      })
+      .finally(() => {
+        currentNotif = null
+      })
+  }
+
+  const uns = notifications.subscribe(async v => {
+    if (!v.length || currentNotif) return
+    await showNotification()
+  })
+
+  onDestroy(() => {
+    uns()
+  })
+
 </script>
 
 <ModalsRoot>
+  <NotifBlock
+      bind:open={openNotificationBlock}
+      class="absolute left-1/2 -translate-x-1/2 top-24 z-9999"
+  />
+
   {#if !data.is_success}
     <div id="notify-block"
          class="absolute top-1/2 left-1/2 width[100px] height[100px] bg-red-500"

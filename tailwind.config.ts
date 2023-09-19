@@ -32,7 +32,10 @@ export default {
         },
         sand: {
           300: "#F4F1DE"
-        }
+        },
+        red: {
+          500: "#E07A5F",
+        },
       },
       zIndex: {
         "6666": "6666",

@@ -19,7 +19,7 @@
 
     const signal = abortController.signal
 
-    p = await api.word.search({
+    p = api.word.search({
       search,
       limit: 10,
       options: {
@@ -76,21 +76,6 @@
           >
             {word}
           </a>
-<!--          <button-->
-<!--              class="flex-shrink-0"-->
-<!--              type="button"-->
-<!--              title="add to clipboard"-->
-<!--          >-->
-<!--            s-->
-<!--          </button>-->
-
-<!--          <button-->
-<!--              class="flex-shrink-0"-->
-<!--              type="button"-->
-<!--              title="show info"-->
-<!--          >-->
-<!--            ->-->
-<!--          </button>-->
         </li>
       {/each}
     </ul>
@@ -110,7 +95,7 @@
     >
       {#await p }
         <Loader
-            class="absolute -left-6 top-1"
+            class="absolute -left-6 top-1 text-deepblue-500"
             width="{20}"
         />
       {/await }

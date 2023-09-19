@@ -1,28 +1,31 @@
 <script lang="ts">
-  import {getContext, onMount} from "svelte"
+  import {getContext} from "svelte"
+  import type {ModalsRootContext} from "$lib/components/modals/modals-root.svelte"
+  import {addNotification} from "$lib/store"
+  import type {Notification} from "$lib/types"
 
   export let data
 
-  const {open} = getContext("modals-root")
+  const {open} = getContext<ModalsRootContext>("modals-root")
 
   let dictsNames = [...data.names]
 
   const openFormCreateDict = async () => {
-    const result = await open({ name: 'create-dict-form' })
+    const name = await open({ name: 'create-dict-form' })
 
-    if (result) {
-      dictsNames = [...dictsNames, result]
+    if (name) {
+      addNotification({
+        message: `<span class="text-lime-50">Dict "${name}" created<span>`,
+        level: "INFO",
+      } as Notification)
+      dictsNames = [...dictsNames, name]
     }
   }
-
-  onMount(async () => {
-    console.log('dicts mounted')
-  })
 </script>
 
 
 <section class="dicts p-4">
-  <ul class="grid grid-cols-2 auto-rows-auto gap-1 max-w-lg m-auto">
+  <ul class="grid grid-cols-2 auto-rows-auto gap-1 max-w-lg m-auto text-deepblue-500">
     <li>
       <a
           href="/dicts/saved"
