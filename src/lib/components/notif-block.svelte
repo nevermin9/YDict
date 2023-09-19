@@ -8,9 +8,9 @@
   import type { NotifLevel, Notification, NotifLevelKey } from "$lib/types"
 
   const COLORS: Record<NotifLevel, string> = {
-    0: "lime-400",
-    1: "yellow-500",
-    2: "red-500",
+    0: "text-lime-50 bg-lime-400",
+    1: "bg-yellow-500",
+    2: "text-deepblue-500 red-500",
   } as const
 
   const LVL_TO_NUM: Record<NotifLevelKey, NotifLevel> = {
@@ -62,7 +62,7 @@
   {#if message}
     <li
         transition:slide={{duration: 400}}
-        class="text-deepblue-500 px-3 py-1 bg-{getColor(level)} rounded"
+        class="text-deepblue-500 px-3 py-1 {getColor(level)} rounded"
     >
       {@html message}
     </li>
