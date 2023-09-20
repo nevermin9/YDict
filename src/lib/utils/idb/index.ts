@@ -1,1 +1,1 @@
-export {default as IdbManager} from "./IdbManager"
+export { default as IdbManager } from "./IdbManager"

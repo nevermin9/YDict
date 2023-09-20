@@ -1,6 +1,6 @@
 export {
-  addNotification,
-  getFirstNotification,
-  removeFirstNotification,
-  notifications,
+    addNotification,
+    getFirstNotification,
+    removeFirstNotification,
+    notifications,
 } from "./notifications"

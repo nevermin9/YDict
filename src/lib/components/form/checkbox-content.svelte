@@ -1,41 +1,40 @@
 <script>
-  let clazz = ''
-	export let value = '';
-  export let checked = false
-  export let group = []
+    let clazz = ""
+    export let value = ""
+    export let checked = false
+    export let group = []
 
-  export { clazz as class }
+    export { clazz as class }
 
-  const ID = 'checkbox-' + Math.random().toString(36).slice(2, 9)
+    const ID = "checkbox-" + Math.random().toString(36).slice(2, 9)
 
-  $: updateGroup(checked)
-  $: updateCheckbox(group)
+    $: updateGroup(checked)
+    $: updateCheckbox(group)
 
-  function updateCheckbox(group) {
-    checked = group.includes(value)
-  }
-
-  function updateGroup(checked) {
-    const index = group.indexOf(value)
-    console.log("update froup", checked, index, value, group)
-
-    if (checked) {
-      if (index < 0) {
-        group.push(value)
-      }
-    } else {
-      if (index >= 0) {
-        group.splice(index, 1)
-      }
+    function updateCheckbox(group) {
+        checked = group.includes(value)
     }
 
-    group = group
-  }
+    function updateGroup(checked) {
+        const index = group.indexOf(value)
+        console.log("update froup", checked, index, value, group)
 
+        if (checked) {
+            if (index < 0) {
+                group.push(value)
+            }
+        } else {
+            if (index >= 0) {
+                group.splice(index, 1)
+            }
+        }
+
+        group = group
+    }
 </script>
 
-<label class="{clazz}" for="{ID}">
-  <input {ID} type="checkbox" bind:checked={checked} {value} />
+<label class={clazz} for={ID}>
+    <input {ID} type="checkbox" bind:checked {value} />
 
-  <slot></slot>
+    <slot />
 </label>

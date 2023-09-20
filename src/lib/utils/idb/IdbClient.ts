@@ -1,4 +1,4 @@
-import type {ObjectStoreConfigs} from "$lib/types"
+import type { ObjectStoreConfigs } from "$lib/types"
 
 export default class IdbClient {
     static LOG_PREFIX = "[IDB_CLIENT]"
@@ -51,7 +51,9 @@ export default class IdbClient {
             request.onupgradeneeded = (event) => {
                 this._db = (event.target as IDBOpenDBRequest).result
                 this._db.onerror = this.#onError
-                return this.#createObjectStores(configs).then(() => resolve(this)).catch(reject)
+                return this.#createObjectStores(configs)
+                    .then(() => resolve(this))
+                    .catch(reject)
             }
             request.onsuccess = (event) => {
                 this._db = (event.target as IDBOpenDBRequest).result
@@ -65,12 +67,14 @@ export default class IdbClient {
         })
     }
 
-    startTransaction(storeName: string, mode: IDBTransactionMode = "readonly"): Promise<IDBObjectStore> {
+    startTransaction(
+        storeName: string,
+        mode: IDBTransactionMode = "readonly"
+    ): Promise<IDBObjectStore> {
         return Promise.resolve(this._db!.transaction(storeName, mode).objectStore(storeName))
     }
 
     // throwErr() {
     //
     // }
-
 }

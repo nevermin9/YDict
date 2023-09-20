@@ -1,7 +1,7 @@
 import word from "./word"
 
 const api = {
-  word
+    word,
 }
 
 export default api

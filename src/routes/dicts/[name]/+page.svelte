@@ -1,15 +1,11 @@
 <script lang="ts">
-  import {onMount} from "svelte"
+    import { onMount } from "svelte"
 
-  onMount(() => {
-    console.log("onMount")
-
-  })
-
+    onMount(() => {
+        console.log("onMount")
+    })
 </script>
 
 <section>
-  <h2>{data}</h2>
+    <h2>{data}</h2>
 </section>
-
-

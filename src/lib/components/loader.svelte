@@ -1,64 +1,60 @@
 <script>
-  let clazz
-  export { clazz as class}
-  export let width = 100
+    let clazz
+    export { clazz as class }
+    export let width = 100
 </script>
 
-<svg
-    viewBox="0 0 100 100"
-    style:width="{width}"
-    class="{clazz}"
->
-  <circle cx="50" cy="50" r="45"/>
+<svg viewBox="0 0 100 100" style:width class={clazz}>
+    <circle cx="50" cy="50" r="45" />
 </svg>
 
 <style lang="scss">
-svg {
-  animation: 2s linear infinite svg-animation;
-  max-width: 100px;
-}
+    svg {
+        animation: 2s linear infinite svg-animation;
+        max-width: 100px;
+    }
 
-// SVG animation.
-@keyframes svg-animation {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(360deg)
-  }
-}
+    // SVG animation.
+    @keyframes svg-animation {
+        0% {
+            transform: rotateZ(0deg);
+        }
+        100% {
+            transform: rotateZ(360deg);
+        }
+    }
 
-// Circle styles.
-circle {
-  animation: 1.4s ease-in-out infinite both circle-animation;
-  display: block;
-  fill: transparent;
-  //stroke: #2f3d4c;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-dasharray: 283;
-  stroke-dashoffset: 280;
-  stroke-width: 10px;
-  transform-origin: 50% 50%;
-}
+    // Circle styles.
+    circle {
+        animation: 1.4s ease-in-out infinite both circle-animation;
+        display: block;
+        fill: transparent;
+        //stroke: #2f3d4c;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-dasharray: 283;
+        stroke-dashoffset: 280;
+        stroke-width: 10px;
+        transform-origin: 50% 50%;
+    }
 
-// Circle animation.
-@keyframes circle-animation {
-  0%,
-  25% {
-    stroke-dashoffset: 280;
-    transform: rotate(0);
-  }
+    // Circle animation.
+    @keyframes circle-animation {
+        0%,
+        25% {
+            stroke-dashoffset: 280;
+            transform: rotate(0);
+        }
 
-  50%,
-  75% {
-    stroke-dashoffset: 75;
-    transform: rotate(45deg);
-  }
+        50%,
+        75% {
+            stroke-dashoffset: 75;
+            transform: rotate(45deg);
+        }
 
-  100% {
-    stroke-dashoffset: 280;
-    transform: rotate(360deg);
-  }
-}
+        100% {
+            stroke-dashoffset: 280;
+            transform: rotate(360deg);
+        }
+    }
 </style>

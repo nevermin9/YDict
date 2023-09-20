@@ -1,2 +1,2 @@
-export {copyObj} from "./copyObj.js"
-export {default as QueueController} from "./QueueController.js"
+export { copyObj } from "./copyObj.js"
+export { default as QueueController } from "./QueueController.js"

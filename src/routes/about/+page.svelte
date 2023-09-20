@@ -1,7 +1,5 @@
 <script>
-  // export let data;
+    // export let data;
 </script>
 
-<h1>
-  about page
-</h1>
+<h1>about page</h1>

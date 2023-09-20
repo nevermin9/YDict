@@ -1,12 +1,11 @@
 <script>
-  import {getContext} from "svelte"
-  const {close} = getContext("modals-root")
+    import { getContext } from "svelte"
+    const { close } = getContext("modals-root")
 
-  const closeModal = () => {
-    console.log ("close modal")
-    close()
-  }
-
+    const closeModal = () => {
+        console.log("close modal")
+        close()
+    }
 </script>
 
 <div
@@ -15,10 +14,10 @@
     w-full h-full
      cursor-pointer"
     on:click|stopPropagation={closeModal}
-></div>
+/>
 
 <style lang="scss">
-  #modal-overlay {
-    background-color: hsl(0, 0%, 0%, 0.5);
-  }
+    #modal-overlay {
+        background-color: hsl(0, 0%, 0%, 0.5);
+    }
 </style>

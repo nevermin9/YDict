@@ -1,1 +1,1 @@
-export {teleport} from "./teleport"
+export { teleport } from "./teleport"
