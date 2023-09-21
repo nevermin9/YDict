@@ -1,45 +1,31 @@
 <script lang="ts">
-    import { getContext } from "svelte"
     import { teleport } from "$lib/utils/actions"
     import SButton from "$lib/components/buttons/s-button.svelte"
-    // import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
     import WordTitle from "$lib/components/word-def/word-title.svelte"
     import WordDefsList from "$lib/components/word-def/defs-list.svelte"
-    // import WordDef from '$lib/components/word-def/word-def.svelte'
     import { Word } from "$lib/utils/idb/models"
-    import { copyObj } from "$lib/utils/helpers"
     import type { PageData } from "./$types"
+    import { modalsRootContext } from "$lib/context"
 
     export let data: PageData
 
     let selectedDefs: string[] = []
 
-    const { open } = getContext("modals-root")
+    const { open } = modalsRootContext.get()
 
-    const saveWord = (dicts) => {
-        const wordDataCopy = copyObj(data.wordData)
-        const word = wordDataCopy.word
-        delete wordDataCopy.word
-        wordDataCopy.results = wordDataCopy.results.filter((def) => {
-            return selectedDefs.includes(def.definition)
-        })
-        const wordToSave = new Word({
-            word,
-            dicts,
-            data: wordDataCopy,
-        })
-
-        return Word.save(wordToSave)
+    const saveWord = (dicts: string[]) => {
+        const w = Word.create(data.wordData, dicts)
+        return Word.save(w)
     }
 
-    const openDictListModal = () => {
-        return open({
+    const openDictListModal = async () => {
+        const dicts = await open({
             name: "dicts-list-modal",
-        }).then((dicts) => {
-            if (dicts) {
-                return saveWord(dicts)
-            }
-        })
+        }) as string[]
+
+        if (dicts && dicts.length) {
+            return saveWord(dicts)
+        }
     }
 
     const addToDict = async () => {

@@ -5,15 +5,15 @@
     import NotifBlock from "$lib/components/notif-block.svelte"
     import type { Notification } from "$lib/types"
     import { getFirstNotification, removeFirstNotification, notifications } from "$lib/store"
-    import { onDestroy, onMount } from "svelte"
-    import { fade } from "svelte/transition"
-    import { disableScrollHandling } from "$app/navigation"
+    import { onDestroy } from "svelte"
+    import ThePageTransition from "$lib/components/the-page-transition.svelte"
+
     // import {page} from "$app/stores"
     // console.log($page);
 
     export let data
-    let openNotificationBlock: (v: Notification) => Promise<void>
 
+    let openNotificationBlock: (v: Notification) => Promise<void>
     let currentNotif: Notification | null = null
     const showNotification = async () => {
         currentNotif = getFirstNotification()
@@ -57,26 +57,22 @@
         </div>
     {/if}
 
-    <div class="flex flex-col h-full">
-        <TheHeader class="shrink-0" />
+    <TheHeader class="h-full" />
 
-        {#key data.pathname}
-            <div
-                class="flex-1 h-full"
-                in:fade={{ duration: 300, delay: 300 }}
-                out:fade={{ duration: 300 }}
-            >
-                <div class="flex-1 h-full px-2">
-                    <slot />
-                </div>
-            </div>
-        {/key}
-    </div>
+    <ThePageTransition class="main-wrapper h-full" refresh={data.pathname}>
+        <main class="flex-1 h-full px-2 pt-2 pb-6">
+            <slot />
+        </main>
+    </ThePageTransition>
 
     <div id="fixed-bottom" class="min-w-min min-h-min" />
 </ModalsRoot>
 
 <style lang="scss">
+    :root {
+        --header-height-mob: 4rem;
+        --header-height-desktop: 4.7rem;
+    }
     :global(html) {
         height: 100%;
         font-family: "Roboto Slab", serif;
@@ -90,5 +86,33 @@
 
     :global(body) {
         height: 100%;
+        display: grid;
+        overflow: auto;
+        grid-template:
+            "header" var(--header-height-mob)
+            "main" 1fr
+            "footer" auto
+            / auto;
+        // gap: ;
+        
+        @media screen and (min-width: 768px) {
+            grid-template:
+                "header" var(--header-height-desktop)
+                "main" 1fr
+                "footer" auto
+                / 1fr auto;
+        }
+    }
+
+    :global(header) {
+        grid-area: header;
+    }
+
+    .fixed-bottom {
+        grid-area: footer;
+    }
+
+    :global(.main-wrapper) {
+        grid-area: main;
     }
 </style>

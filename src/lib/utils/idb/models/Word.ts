@@ -1,9 +1,11 @@
 import { IdbManager } from "$lib/utils/idb"
 import type { ObjectStoreConfig, IWord, WordApiData } from "$lib/types"
+import { copyObj } from "$lib/utils/helpers"
 
+type StoredWordData = Partial<WordApiData>
 export default class Word implements IWord {
     word: string
-    data: WordApiData
+    data: StoredWordData
     dicts: string[]
     cards: string[]
 
@@ -19,7 +21,19 @@ export default class Word implements IWord {
         this.data = data
     }
 
-    static save(word: string) {
+    static #getWordData(data: WordApiData): StoredWordData {
+        const copy = copyObj(data)
+        delete (copy as StoredWordData).word
+        return copy
+    }
+
+    static create(_data: WordApiData, dicts: string[] = [], cards: string[] = []) {
+        const word = _data.word
+        const data = this.#getWordData(_data)
+        return new Word({ word, data, dicts, cards })
+    }
+
+    static save(word: Word) {
         return IdbManager.insert(this.STORE_NAME, word)
     }
 

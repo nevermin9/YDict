@@ -2,8 +2,10 @@ export interface IWord {
     word: string
     dicts: string[]
     cards: string[]
-    data: WordApiData
+    data: StoredWordData
 }
+
+export type StoredWordData = Partial<WordApiData>
 
 export type WordDefinition = {
     definition: string
@@ -16,6 +18,7 @@ export type WordDefinition = {
 
 // translate bc
 export type WordApiData = {
+    word: string
     frequency?: number
     pronunciation: {
         all: string

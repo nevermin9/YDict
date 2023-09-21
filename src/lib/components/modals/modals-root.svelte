@@ -1,14 +1,9 @@
 <script context="module" lang="ts">
-    type ModalName = "create-dict-form" | "dicts-list-modal"
-
-    export type ModalsRootContext = {
-        open: (v: { name: ModalName; data?: any }) => Promise<any>
-        close: (...args: any[]) => void
-    }
 </script>
 
 <script lang="ts">
-    import { setContext } from "svelte"
+    import type {ModalName} from "$lib/context"
+    import {modalsRootContext, checkModalName} from "$lib/context"
 
     let name: ModalName | "" = ""
     let data = null
@@ -20,7 +15,9 @@
         data = null
     }
 
-    const open = ({ name: _name, data: _data = null }: { name: ModalName; data?: any }) => {
+    const open = <T>({ name: _name, data: _data = null }: {name: ModalName, data?: T | null}) => {
+        const isValid = checkModalName(_name)
+        if (!isValid) throw new Error("[modals-root.svelte] invalid modal name")
         return new Promise((res) => {
             name = _name
             data = _data
@@ -30,9 +27,10 @@
         })
     }
 
-    setContext("modals-root", {
+
+    modalsRootContext.set({
         open,
-        close: (...args: any[]) => resolve(...args),
+        close: (...args) => resolve(...args),
     })
 </script>
 

@@ -1,9 +1,17 @@
-<script context="module">
+<script lang="ts" context="module">
     import CardIco from "$lib/components/svg/card-ico.svelte"
     import DictIco from "$lib/components/svg/dict-ico.svelte"
     import HomeIco from "$lib/components/svg/home-ico.svelte"
 
-    const MENU_ITEMS = [
+    type MenuItem = {
+        id: string
+        name: string
+        href: string
+        icon: typeof CardIco
+        itIsMe: (pathname: string) => boolean
+    }
+
+    const MENU_ITEMS: MenuItem[] = [
         {
             id: "cards",
             name: "Card sets",
@@ -28,15 +36,19 @@
     ]
 </script>
 
-<script>
+<script lang="ts">
     import SvgRoot from "$lib/components/svg/svg-root.svelte"
 
     let clazz = ""
+
     export { clazz as class }
 </script>
 
-<header class="the-header relative h-20 {clazz}">
-    <div class="fixed z-7777 top-0 left-1/2 -translate-x-1/2 w-full max-w-md h-16 p-1 pt-2">
+<header class="the-header {clazz}">
+    <div class="the-header__body
+    fixed z-7777 top-0 left-1/2 -translate-x-1/2
+    w-full max-w-md p-1 pt-2"
+    >
         <nav class="the-header__nav shadow-xl w-full h-full">
             <ul
                 class="
@@ -84,6 +96,14 @@
 <style lang="scss">
     .the-header {
         $root: &;
+
+        &__body {
+            height: var(--header-height-mob);
+
+            @media screen and (min-width: 768px) {
+                height: var(--header-height-desktop);
+            }
+        }
 
         &__nav-list-link:active {
             :global(#{$root}__svg-root) {

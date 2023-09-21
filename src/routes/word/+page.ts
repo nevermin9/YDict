@@ -1,6 +1,7 @@
 import api from "$api"
 import { error, redirect } from "@sveltejs/kit"
 import HTTPResponseError from "$lib/utils/http-client/HTTPResponseError"
+import type {ReturnType, PromiseType} from "$lib/types"
 
 import type { PageLoad } from "./$types"
 
@@ -11,7 +12,7 @@ export const load: PageLoad = async ({ url }) => {
         throw redirect(307, "/")
     }
 
-    let wordData
+    let wordData: PromiseType<ReturnType<typeof api.word.getWord>>
 
     try {
         wordData = await api.word.getWord(search || "")

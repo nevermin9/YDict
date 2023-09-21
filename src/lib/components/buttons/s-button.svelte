@@ -1,7 +1,7 @@
 <script>
     export let type = "button"
     export let theme = "light"
-    let clazz
+    let clazz = ""
     export { clazz as class }
     export let disabled = false
     export let title = ""

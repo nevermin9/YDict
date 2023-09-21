@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import TheSearchInput from "$lib/components/the-search-input.svelte"
 </script>
 

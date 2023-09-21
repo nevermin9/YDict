@@ -60,7 +60,7 @@
     }
 </script>
 
-<section>
+<section class="h-full">
     <div on:pointerdown={rotateCard} class="relative w-full h-full" style:perspective="1000px">
         {#each listOfData as data, i (data.id)}
             <Card
