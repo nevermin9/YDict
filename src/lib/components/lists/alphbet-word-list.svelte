@@ -1,13 +1,12 @@
 <script lang="ts">
     import type { IWord } from "$lib/types"
-    import { onMount } from "svelte"
 
     export let wordList: IWord[] = []
 
     const createDict = (dict: Map<string, IWord[]>, current: IWord) => {
         const firstLetter = current.word[0].toUpperCase()
         if (dict.has(firstLetter)) {
-            dict.get(firstLetter).push(current)
+            dict.get(firstLetter)!.push(current)
         } else {
             dict.set(firstLetter, [current])
         }
@@ -35,6 +34,6 @@
             {/each}
         </ul>
     {:else}
-        <span> Loading... </span>
+        <li> You've saved nothing so far </li>
     {/each}
 </ul>

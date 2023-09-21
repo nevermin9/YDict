@@ -1,21 +1,30 @@
 <script lang="ts">
+    import type { PageData } from "./$types"
     import { teleport } from "$lib/utils/actions"
     import SButton from "$lib/components/buttons/s-button.svelte"
     import WordTitle from "$lib/components/word-def/word-title.svelte"
     import WordDefsList from "$lib/components/word-def/defs-list.svelte"
     import { Word } from "$lib/utils/idb/models"
-    import type { PageData } from "./$types"
-    import { modalsRootContext } from "$lib/context"
+    import { modalsRootContext, notificationsContext } from "$lib/context"
 
     export let data: PageData
 
     let selectedDefs: string[] = []
+    console.log("WORD PAGE", data.wordFromDB)
 
     const { open } = modalsRootContext.get()
+    const { add: notify } = notificationsContext.get()
 
     const saveWord = (dicts: string[]) => {
-        const w = Word.create(data.wordData, dicts)
-        return Word.save(w)
+        const w = Word.create(data.searchedWord, dicts)
+        console.log("the word=", w);
+        
+        return Word.save(w).then(() => {
+            notify({
+                message: `<span class="text-lime-50">Word "${w.word}" is saved<span>`,
+                level: "INFO",
+            })
+        })
     }
 
     const openDictListModal = async () => {
@@ -23,7 +32,7 @@
             name: "dicts-list-modal",
         }) as string[]
 
-        if (dicts && dicts.length) {
+        if (dicts) {
             return saveWord(dicts)
         }
     }
@@ -36,26 +45,11 @@
 <section>
     <WordTitle
         class="mb-4"
-        word={data.wordData.word}
-        pronunciation={data.wordData?.pronunciation?.all}
+        word={data.searchedWord.word}
+        pronunciation={data.searchedWord?.pronunciation?.all}
     />
 
-    <WordDefsList bind:selectedDefs definitions={data.wordData?.results} />
-
-    <!--{#each data.wordData?.results as result, i (i)}-->
-    <!--  <CheckboxContent-->
-    <!--      value={result.definition}-->
-    <!--      bind:group={selectedDefs}-->
-    <!--      class="block mb-2"-->
-    <!--  >-->
-    <!--    <WordDef-->
-    <!--        wordDefinition="{result}"-->
-    <!--    />-->
-
-    <!--  </CheckboxContent>-->
-    <!--{:else }-->
-    <!--    <p>no results</p>-->
-    <!--{/each}-->
+    <WordDefsList bind:selectedDefs definitions={data.searchedWord?.results} />
 
     <div
         use:teleport={"fixed-bottom"}

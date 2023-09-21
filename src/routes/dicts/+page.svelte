@@ -1,21 +1,26 @@
 <script lang="ts">
     import { getContext } from "svelte"
-    import type { ModalsRootContext } from "$lib/components/modals/modals-root.svelte"
+    import {modalsRootContext, notificationsContext} from "$lib/context"
     import { addNotification } from "$lib/store"
     import type { Notification } from "$lib/types"
 
     export let data
 
-    const { open } = getContext<ModalsRootContext>("modals-root")
+    const { open } = modalsRootContext.get()
+    const { add: notify } = notificationsContext.get()
 
-    let dictsNames = [...data.names]
+    let dictsNames: string[] = [...data.names]
 
     const openFormCreateDict = async () => {
         const name = await open({ name: "create-dict-form" })
 
         if (name) {
-            addNotification({
+            notify({
                 message: `<span class="text-lime-50">Dict "${name}" created<span>`,
+                level: "INFO",
+            } as Notification)
+            notify({
+                message: `<span class="text-lime-50">check if she is gone<span>`,
                 level: "INFO",
             } as Notification)
             dictsNames = [...dictsNames, name]

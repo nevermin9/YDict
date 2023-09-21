@@ -7,10 +7,10 @@
     let clazz = ""
     export { clazz as class }
 
-    let search = ""
-    let searchResult = []
-    let p = null
-    let abortController = null
+    let search: string = ""
+    let searchResult: string[] = []
+    let p: Promise<string[] | void> | null = null
+    let abortController: AbortController | null = null
     const MIN_SEARCH_LENGTH = 3
 
     const doSearch = async () => {
@@ -42,7 +42,7 @@
                 abortController = null
             })
 
-        searchResult = await p
+        searchResult = await p as string[]
     }
 
     const debouncedDoSearch = debounce(doSearch, 500)
@@ -103,8 +103,8 @@
             />
         </label>
 
-        <SButton data-name="lookup-button" type="submit">
-            <span class="text-deepblue-500 font-bold text-lg uppercase"> look up </span>
+        <SButton type="submit">
+            <span class="text-deepblue-500 font-bold text-md sm:text-lg uppercase"> look up </span>
         </SButton>
     </form>
 </div>

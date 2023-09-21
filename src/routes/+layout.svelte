@@ -4,23 +4,29 @@
     import TheHeader from "$lib/components/the-header.svelte"
     import NotifBlock from "$lib/components/notif-block.svelte"
     import type { Notification } from "$lib/types"
-    import { getFirstNotification, removeFirstNotification, notifications } from "$lib/store"
-    import { onDestroy } from "svelte"
     import ThePageTransition from "$lib/components/the-page-transition.svelte"
-
-    // import {page} from "$app/stores"
-    // console.log($page);
+    import { notificationsContext } from "$lib/context"
 
     export let data
+
+    let notifications: Notification[] = [] 
+    notificationsContext.set({
+        add: (notif: Notification) => {
+            notifications = [...notifications, notif]
+        },
+    })
+    const updateNotifList = () => {
+        notifications = notifications.slice(1)
+    }
 
     let openNotificationBlock: (v: Notification) => Promise<void>
     let currentNotif: Notification | null = null
     const showNotification = async () => {
-        currentNotif = getFirstNotification()
+        currentNotif = notifications[0]
         if (currentNotif == null) return
         await openNotificationBlock(currentNotif)
             .then(() => {
-                removeFirstNotification()
+                updateNotifList()
                 return showNotification()
             })
             .finally(() => {
@@ -28,14 +34,11 @@
             })
     }
 
-    const uns = notifications.subscribe(async (v) => {
-        if (!v.length || currentNotif) return
-        await showNotification()
-    })
-
-    onDestroy(() => {
-        uns()
-    })
+    $: {
+        if (notifications.length) {
+            showNotification()
+        }
+    }
 </script>
 
 <ModalsRoot>
@@ -108,7 +111,7 @@
         grid-area: header;
     }
 
-    .fixed-bottom {
+    #fixed-bottom {
         grid-area: footer;
     }
 

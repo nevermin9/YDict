@@ -1,13 +1,14 @@
-<script>
-    import { getContext, onMount } from "svelte"
+<script lang="ts">
+    import { onMount } from "svelte"
     import ModalBody from "./components/modal-body.svelte"
     import ModalHeader from "./components/modal-header.svelte"
     import ModalContent from "./components/modal-content.svelte"
     import { Dictionary } from "$lib/utils/idb/models"
     import SButton from "$lib/components/buttons/s-button.svelte"
+    import { modalsRootContext } from "$lib/context"
 
-    const { close } = getContext("modals-root")
-    let dictsNames = []
+    const { close } = modalsRootContext.get()
+    let dictsNames: string[] = []
     let selectedDicts = ["saved"]
 
     const getDictsNames = async () => {
