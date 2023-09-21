@@ -52,7 +52,7 @@
     <WordDefsList bind:selectedDefs definitions={data.searchedWord?.results} />
 
     <div
-        use:teleport={"fixed-bottom"}
+        use:teleport={{targetId: "fixed-bottom", fixHeight: true}}
         class="fixed bottom-0 left-0 flex w-full p-3 justify-around bg-green-500 border-t border-sand-300"
     >
         <SButton type="button" disabled={!selectedDefs.length} on:click={() => addToDict()}>
