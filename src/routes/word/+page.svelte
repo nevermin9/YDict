@@ -17,7 +17,6 @@
 
     const saveWord = (dicts: string[]) => {
         const w = Word.create(data.searchedWord, dicts)
-        console.log("the word=", w);
         
         return Word.save(w).then(() => {
             notify({

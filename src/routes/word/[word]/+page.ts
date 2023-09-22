@@ -8,7 +8,6 @@ export const load: PageLoad = async ({ params }) => {
     try {
         if (browser) {
             wordData = await Word.get(params.word)
-            console.log("word", wordData)
 
             if (!wordData) {
                 throw error(404, "Word not found")

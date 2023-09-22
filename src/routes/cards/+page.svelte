@@ -1,5 +1,4 @@
 <script>
-    // import Board from '$lib/components/card/board.svelte'
     import Card, {
         generateCardTransform,
         throwLeftAnimationClass,
@@ -77,13 +76,6 @@
 
         <button on:click={markAsLearned}> mark as learned </button>
     </div>
-
-    <!--  <Board {card} let:cardX let:cardY let:rotation let:opacity >-->
-    <!--    <svelte:component this={card} {cardX} {cardY} {rotation} {opacity} />-->
-    <!--    {#each listOfData as data, i (data.id)}-->
-    <!--      <Card {data} bind:card={cards[i]} />-->
-    <!--    {/each}-->
-    <!--  </Board>-->
 </section>
 
 <style lang="scss">

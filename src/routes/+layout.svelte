@@ -15,7 +15,7 @@
             notifications = [...notifications, notif]
         },
     })
-    const updateNotifList = () => {
+    const cutNotifList = () => {
         notifications = notifications.slice(1)
     }
 
@@ -26,7 +26,7 @@
         if (currentNotif == null) return
         await openNotificationBlock(currentNotif)
             .then(() => {
-                updateNotifList()
+                cutNotifList()
                 return showNotification()
             })
             .finally(() => {

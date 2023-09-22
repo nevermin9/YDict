@@ -33,7 +33,6 @@ export const load: LayoutLoad = async ({ url }) => {
         is_success = true
     } catch (e) {
         reason = (e as Error).message
-        console.error(e)
     }
 
     return {

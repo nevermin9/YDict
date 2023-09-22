@@ -18,8 +18,7 @@ export default class IdbManager {
         let _c: IdbClient = new IdbClient(name, version)
         _c = await _c.createClient(configs)
         setClient(_c)
-
-        console.log("init db", getClient())
+        console.info("[IDB_MANAGER] Created IndexedDB client")
     }
 
     static async #getDB(): Promise<IdbClient> {
@@ -27,22 +26,18 @@ export default class IdbManager {
             const db = getClient()?.db
 
             if (!db) {
-                console.log("no db get it")
                 return requestAnimationFrame(check.bind(null, resolve))
             }
 
-            console.log("here is db", getClient(), db)
             return resolve(getClient() as IdbClient)
         }
 
         if (!getClient()?.db) {
-            console.log("no db get it")
             const _client = (await this.queue.process(
                 "get-db-client",
                 () => new Promise((resolve) => check(resolve))
             )) as Promise<IdbClient>
 
-            console.log("_client", _client)
             return _client
         }
 
@@ -75,7 +70,6 @@ export default class IdbManager {
     ) {
         try {
             const db = await this.#getDB()
-            console.log("db", db)
             return new Promise((resolve, reject) => {
                 return db.startTransaction(storeName, "readonly").then((store) => {
                     const request = store.getAll(options?.query, options?.count)

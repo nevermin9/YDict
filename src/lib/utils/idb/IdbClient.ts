@@ -36,7 +36,6 @@ export default class IdbClient {
         const promises: Promise<IdbClient>[] = []
         for (const [name, config] of objectStores) {
             const store = this._db!.createObjectStore(name, config)
-            console.log("looop")
             promises.push(this.#waitStoreComplete(store))
         }
 

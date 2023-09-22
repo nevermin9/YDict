@@ -1,11 +1,6 @@
-<script>
-    import { getContext } from "svelte"
-    const { close } = getContext("modals-root")
-
-    const closeModal = () => {
-        console.log("close modal")
-        close()
-    }
+<script lang="ts">
+    import { modalsRootContext } from "$lib/context"
+    const { close } = modalsRootContext.get()
 </script>
 
 <div
@@ -13,7 +8,7 @@
     class="fixed top-0 left-0 z-8888
     w-full h-full
      cursor-pointer"
-    on:click|stopPropagation={closeModal}
+    on:click|stopPropagation={close}
 />
 
 <style lang="scss">

@@ -10,8 +10,6 @@
         const result = await fetch(`/api/create-sentence?with=${data.wordData.word}`).then((r) =>
             r.json()
         )
-
-        console.log("the result", result)
     }
 </script>
 

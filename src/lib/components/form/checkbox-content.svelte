@@ -17,7 +17,6 @@
 
     function updateGroup(checked) {
         const index = group.indexOf(value)
-        console.log("update froup", checked, index, value, group)
 
         if (checked) {
             if (index < 0) {

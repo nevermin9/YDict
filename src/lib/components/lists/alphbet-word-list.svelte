@@ -15,9 +15,7 @@
 
     let dict = new Map<string, IWord[]>()
     $: {
-        console.log("wordList", wordList)
         dict = wordList.reduce(createDict, dict)
-        console.log("dict", dict)
     }
 </script>
 

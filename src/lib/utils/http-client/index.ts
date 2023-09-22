@@ -31,8 +31,6 @@ class HttpClient {
         const link = new URL(url, this.baseUrl)
         const queries = options.params ?? {}
         link.search = new URLSearchParams(queries).toString()
-        console.log("link", link)
-        console.log("link toString", link.toString())
 
         try {
             const res = await fetch(link, {
