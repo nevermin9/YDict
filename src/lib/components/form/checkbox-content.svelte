@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
     let clazz = ""
+    export let disabled = false
     export let value = ""
     export let checked = false
-    export let group = []
+    export let group: string[] = []
 
     export { clazz as class }
 
@@ -11,11 +12,11 @@
     $: updateGroup(checked)
     $: updateCheckbox(group)
 
-    function updateCheckbox(group) {
+    function updateCheckbox(group: string[]) {
         checked = group.includes(value)
     }
 
-    function updateGroup(checked) {
+    function updateGroup(checked: boolean) {
         const index = group.indexOf(value)
 
         if (checked) {
@@ -33,7 +34,7 @@
 </script>
 
 <label class={clazz} for={ID}>
-    <input {ID} type="checkbox" bind:checked {value} />
+    <input id="{ID}" type="checkbox" bind:checked {value} {disabled} />
 
     <slot />
 </label>

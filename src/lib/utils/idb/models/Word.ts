@@ -21,15 +21,16 @@ export default class Word implements IWord {
         this.data = data
     }
 
-    static #getWordData(data: WordApiData): StoredWordData {
+    static #getWordData(data: WordApiData, defs: string[]): StoredWordData {
         const copy = copyObj(data)
         delete (copy as StoredWordData).word
+        copy.results = copy.results.filter((r) => defs.includes(r.definition))
         return copy
     }
 
-    static create(_data: WordApiData, dicts: string[] = [], cards: string[] = []) {
+    static create(_data: WordApiData, definitions: string[], dicts: string[] = [], cards: string[] = []) {
         const word = _data.word
-        const data = this.#getWordData(_data)
+        const data = this.#getWordData(_data, definitions)
         return new Word({ word, data, dicts, cards })
     }
 

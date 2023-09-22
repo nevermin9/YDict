@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { PageData } from "./$types"
     import { teleport } from "$lib/utils/actions"
+    import { copyObj } from "$lib/utils/helpers"
     import SButton from "$lib/components/buttons/s-button.svelte"
     import WordTitle from "$lib/components/word-def/word-title.svelte"
     import WordDefsList from "$lib/components/word-def/defs-list.svelte"
@@ -10,13 +11,26 @@
     export let data: PageData
 
     let selectedDefs: string[] = []
-    console.log("WORD PAGE", data.wordFromDB)
+    const isSaved = Boolean(data.wordFromDB?.data?.results?.length)
+    const savedDefsObj = copyObj(data.wordFromDB?.data?.results || [])
+    const savedDefs = savedDefsObj.map((def) => def.definition)
+    const savedDefsLength = savedDefs.length
+    let shouldUpdate = false
+    $: {
+        if (isSaved
+            && selectedDefs.some((def) => !savedDefs.includes(def))
+            || selectedDefs.length != savedDefsLength) {
+            shouldUpdate = true
+        } else {
+            shouldUpdate = false
+        }
+    }
 
     const { open } = modalsRootContext.get()
     const { add: notify } = notificationsContext.get()
 
     const saveWord = (dicts: string[]) => {
-        const w = Word.create(data.searchedWord, dicts)
+        const w = Word.create(data.searchedWord, selectedDefs, dicts)
         
         return Word.save(w).then(() => {
             notify({
@@ -48,7 +62,7 @@
         pronunciation={data.searchedWord?.pronunciation?.all}
     />
 
-    <WordDefsList bind:selectedDefs definitions={data.searchedWord?.results} />
+    <WordDefsList checkedDefsObj={savedDefsObj} bind:selectedDefs definitions={data.searchedWord?.results} />
 
     <div
         use:teleport={{targetId: "fixed-bottom", fixHeight: true}}
@@ -58,8 +72,14 @@
             <span class="text-deepblue-500 uppercase"> add to dict </span>
         </SButton>
 
-        <SButton type="button" disabled={!selectedDefs.length}>
+        {#if isSaved}
+            <SButton type="button" disabled={!shouldUpdate}>
+                <span class="text-deepblue-500 uppercase"> update </span>
+            </SButton>
+        {/if}
+
+        <!-- <SButton type="button" disabled={!selectedDefs.length}>
             <span class="text-deepblue-500 uppercase"> add to card group </span>
-        </SButton>
+        </SButton> -->
     </div>
 </section>
