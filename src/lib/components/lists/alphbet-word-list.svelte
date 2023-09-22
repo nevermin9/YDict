@@ -19,12 +19,15 @@
     }
 </script>
 
-<ul>
+<ul class="flex flex-col gap-2">
     {#each dict.entries() as [letter, words] (letter)}
-        <h2>{letter}</h2>
-        <ul>
+        <h2 class="max-w-[50px] w-full text-deepblue-500 text-center text-lg font-bold bg-sand-300 px-3 py-2 rounded shadow">
+            {letter}
+        </h2>
+
+        <ul class="flex flex-col gap-1 mb-3">
             {#each words as w, i (i)}
-                <li>
+                <li class="text-deepblue-500 text-left bg-sand-300 cursor-pointer rounded shadow px-1 py-2 hover:underline">
                     <a href="/word/{w.word}">
                         {w.word}
                     </a>

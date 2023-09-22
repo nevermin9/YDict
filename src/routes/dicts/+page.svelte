@@ -1,7 +1,6 @@
 <script lang="ts">
     import { getContext } from "svelte"
     import {modalsRootContext, notificationsContext} from "$lib/context"
-    import { addNotification } from "$lib/store"
     import type { Notification } from "$lib/types"
 
     export let data

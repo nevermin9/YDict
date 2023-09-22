@@ -44,4 +44,6 @@ export default class Word implements IWord {
     static get(word: string): Promise<Word> {
         return IdbManager.get<Word>(this.STORE_NAME, word)
     }
+
+    // static get
 }

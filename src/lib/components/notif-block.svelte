@@ -4,7 +4,6 @@
 
 <script lang="ts">
     import { slide } from "svelte/transition"
-    import { onMount } from "svelte"
     import type { NotifLevel, Notification, NotifLevelKey } from "$lib/types"
 
     const COLORS: Record<NotifLevel, string> = {
