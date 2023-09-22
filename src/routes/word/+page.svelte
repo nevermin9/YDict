@@ -53,6 +53,17 @@
     const addToDict = async () => {
         await openDictListModal()
     }
+
+    const updateWord = () => {
+        const w = Word.create(data.searchedWord, selectedDefs, data.wordFromDB?.dicts || [])
+
+        return Word.update(w).then(() => {
+            notify({
+                message: `<span class="text-lime-50">Word "${w.word}" is updated<span>`,
+                level: "INFO",
+            })
+        })
+    }
 </script>
 
 <section>
@@ -73,7 +84,7 @@
         </SButton>
 
         {#if isSaved}
-            <SButton type="button" disabled={!shouldUpdate}>
+            <SButton type="button" disabled={!shouldUpdate} on:click={() => updateWord()}>
                 <span class="text-deepblue-500 uppercase"> update </span>
             </SButton>
         {/if}

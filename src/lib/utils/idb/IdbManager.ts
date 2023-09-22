@@ -104,6 +104,25 @@ export default class IdbManager {
             return Promise.reject(err)
         }
     }
+
+    static async update<T>(storeName: string, data: T): Promise<string> {
+        try {
+            const db = await this.#getDB()
+            return new Promise((resolve, reject) => {
+                return db.startTransaction(storeName, "readwrite").then((store) => {
+                    const request = store.put(data)
+                    request.onsuccess = (e) => {
+                        resolve((e.target as IDBRequest).result as string)
+                    }
+                    request.onerror = (e_1) => {
+                        reject(e_1)
+                    }
+                })
+            })
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
     //
     // static async get(storeName, key) {
     //   return _client.get(storeName, key)
