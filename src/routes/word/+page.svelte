@@ -37,6 +37,11 @@
                 message: `<span class="text-lime-50">Word "${w.word}" is saved<span>`,
                 level: "INFO",
             })
+        }).catch(() => {
+            notify({
+                message: `<span class="text-lime-50">Word "${w.word}" is not saved<span>`,
+                level: "ERROR",
+            })
         })
     }
 
@@ -61,6 +66,11 @@
             notify({
                 message: `<span class="text-lime-50">Word "${w.word}" is updated<span>`,
                 level: "INFO",
+            })
+        }).catch(() => {
+            notify({
+                message: `<span class="text-lime-50">Word "${w.word}" is not updated<span>`,
+                level: "ERROR",
             })
         })
     }
