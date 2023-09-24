@@ -44,26 +44,26 @@ export default class IdbManager {
         return getClient() as IdbClient
     }
 
-    static async insert<T>(storeName: string, data: T): Promise<T> {
-        try {
-            const db = await this.#getDB()
+    // static async insert<T>(storeName: string, data: T): Promise<T> {
+    //     try {
+    //         const db = await this.#getDB()
 
-            return new Promise((resolve, reject) => {
-                return db.startTransaction(storeName, "readwrite").then((store) => {
-                    const request = store.add(data)
-                    request.onsuccess = (e) => {
-                        resolve((e.target as IDBRequest).result as T)
-                    }
-                    request.onerror = (e_1) => {
-                        reject(e_1)
-                    }
-                })
-            })
-        } catch (err) {
-            return Promise.reject(err)
-        }
-    }
-    //
+    //         return new Promise((resolve, reject) => {
+    //             return db.startTransaction(storeName, "readwrite").then((store) => {
+    //                 const request = store.add(data)
+    //                 request.onsuccess = (e) => {
+    //                     resolve((e.target as IDBRequest).result as T)
+    //                 }
+    //                 request.onerror = (e_1) => {
+    //                     reject(e_1)
+    //                 }
+    //             })
+    //         })
+    //     } catch (err) {
+    //         return Promise.reject(err)
+    //     }
+    // }
+    // //
     static async getAll(
         storeName: string,
         options?: { count?: number; query?: string | IDBKeyRange }
@@ -105,7 +105,7 @@ export default class IdbManager {
         }
     }
 
-    static async update<T>(storeName: string, data: T): Promise<string> {
+    static async insert<T>(storeName: string, data: T): Promise<string> {
         try {
             const db = await this.#getDB()
             return new Promise((resolve, reject) => {

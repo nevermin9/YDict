@@ -57,7 +57,7 @@
     const updateWord = () => {
         const w = Word.create(data.searchedWord, selectedDefs, data.wordFromDB?.dicts || [])
 
-        return Word.update(w).then(() => {
+        return Word.save(w).then(() => {
             notify({
                 message: `<span class="text-lime-50">Word "${w.word}" is updated<span>`,
                 level: "INFO",
