@@ -28,7 +28,10 @@
         <ul class="flex flex-col gap-1 mb-3">
             {#each words as w, i (i)}
                 <li class="text-deepblue-500 text-left bg-sand-300 cursor-pointer rounded shadow px-1 py-2 hover:underline">
-                    <a href="/word/{w.word}">
+                    <a
+                        class="inline-block w-full h-full"
+                        href="/word/{w.word}"
+                    >
                         {w.word}
                     </a>
                 </li>
