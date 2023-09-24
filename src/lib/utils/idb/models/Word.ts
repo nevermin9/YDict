@@ -13,6 +13,18 @@ export default class Word implements IWord {
     static STORE_CONFIG: ObjectStoreConfig = {
         keyPath: "word",
     }
+    static STORE_INDEXES = [
+        {
+            name: "dicts",
+            keyPath: "dicts",
+            option: { unique: false, multiEntry: true },
+        },
+        // {
+        //     name: "cards",
+        //     keyPath: "cards",
+        //     multiEntry: true,
+        // },
+    ]
 
     constructor({ word, dicts, data, cards = [] }: IWord) {
         this.word = word

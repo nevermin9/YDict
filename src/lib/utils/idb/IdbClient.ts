@@ -1,4 +1,4 @@
-import type { ObjectStoreConfigs } from "$lib/types"
+import type { IdbClientConfig } from "$lib/types"
 
 export default class IdbClient {
     static LOG_PREFIX = "[IDB_CLIENT]"
@@ -18,7 +18,10 @@ export default class IdbClient {
     }
 
     #onError(event: Event) {
-        console.error(IdbClient.LOG_PREFIX, "error", event)
+        const target = event.target as IDBOpenDBRequest
+        const name = target?.error?.name
+        const msg = target.error?.message
+        console.error(IdbClient.LOG_PREFIX, `[${name}]`, msg)
     }
 
     #waitStoreComplete(store: IDBObjectStore): Promise<IdbClient> {
@@ -32,10 +35,22 @@ export default class IdbClient {
         })
     }
 
-    async #createObjectStores(objectStores: ObjectStoreConfigs): Promise<IdbClient> {
+    async #createObjectStores(config: IdbClientConfig): Promise<IdbClient> {
         const promises: Promise<IdbClient>[] = []
-        for (const [name, config] of objectStores) {
-            const store = this._db!.createObjectStore(name, config)
+        for (const [name, _c] of config) {
+            const store = this._db!.createObjectStore(name, _c.storeConfig)
+
+            if (!_c.indexes) {
+                promises.push(this.#waitStoreComplete(store))
+                continue
+            }
+
+            for (const index of _c.indexes) {
+                console.log(IdbClient.LOG_PREFIX, "create index", index.name)
+
+                store.createIndex(index.name, index.keyPath, index.option)
+            }
+
             promises.push(this.#waitStoreComplete(store))
         }
 
@@ -44,13 +59,13 @@ export default class IdbClient {
         return this
     }
 
-    createClient(configs: ObjectStoreConfigs): Promise<IdbClient> {
+    createClient(config: IdbClientConfig): Promise<IdbClient> {
         return new Promise((resolve, reject) => {
             const request = indexedDB.open(this.name, this._version)
             request.onupgradeneeded = (event) => {
                 this._db = (event.target as IDBOpenDBRequest).result
                 this._db.onerror = this.#onError
-                return this.#createObjectStores(configs)
+                return this.#createObjectStores(config)
                     .then(() => resolve(this))
                     .catch(reject)
             }
@@ -61,7 +76,7 @@ export default class IdbClient {
             }
             request.onerror = (event) => {
                 this.#onError(event)
-                reject(event)
+                reject((event.target as IDBOpenDBRequest).error)
             }
         })
     }

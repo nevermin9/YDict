@@ -8,6 +8,7 @@ export default {
                 // #3e5991
                 green: {
                     500: "#81B29A",
+                    600: "#0A5C36",
                 },
                 gray: {
                     400: "#b2c1e0",

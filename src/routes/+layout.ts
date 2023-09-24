@@ -20,14 +20,16 @@ export const load: LayoutLoad = async ({ url }) => {
             throw new Error("Invalid version")
         }
 
+        const config = new Map([
+            [Word.STORE_NAME, { storeConfig: Word.STORE_CONFIG, indexes: Word.STORE_INDEXES }],
+            [Dictionary.STORE_NAME, { storeConfig: Dictionary.STORE_CONFIG }],
+            ["card", { storeConfig: { keyPath: "name" } }],
+        ])
+
         await IdbManager.init(
             PUBLIC_IDB_NAME,
             ver,
-            new Map([
-                [Word.STORE_NAME, Word.STORE_CONFIG],
-                [Dictionary.STORE_NAME, Dictionary.STORE_CONFIG],
-                ["card", { keyPath: "name" }],
-            ])
+            config,
         )
 
         is_success = true

@@ -1,4 +1,4 @@
-import type { ObjectStoreConfigs } from "$lib/types"
+import type { IdbClientConfig } from "$lib/types"
 import IdbClient from "./IdbClient.js"
 import { QueueController } from "../helpers"
 
@@ -14,9 +14,9 @@ const getClient = () => {
 export default class IdbManager {
     static queue = new QueueController()
 
-    static async init(name: string, version: number, configs: ObjectStoreConfigs) {
+    static async init(name: string, version: number, config: IdbClientConfig) {
         let _c: IdbClient = new IdbClient(name, version)
-        _c = await _c.createClient(configs)
+        _c = await _c.createClient(config)
         setClient(_c)
         console.info("[IDB_MANAGER] Created IndexedDB client")
     }

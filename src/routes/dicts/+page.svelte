@@ -18,10 +18,7 @@
                 message: `<span class="text-lime-50">Dict "${name}" created<span>`,
                 level: "INFO",
             } as Notification)
-            notify({
-                message: `<span class="text-lime-50">check if she is gone<span>`,
-                level: "INFO",
-            } as Notification)
+
             dictsNames = [...dictsNames, name]
         }
     }

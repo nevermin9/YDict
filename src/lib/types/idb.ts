@@ -10,4 +10,18 @@ export type ObjectStoreConfig = {
     autoIncrement?: boolean
 }
 
-export type ObjectStoreConfigs = Map<string, ObjectStoreConfig>
+export type ObjectStoreIndex = {
+    name: string
+    keyPath: string
+    option: {
+        unique: boolean
+        multiEntry: boolean
+    }
+}
+
+export type IdbStoresConfig = {
+    storeConfig: ObjectStoreConfig,
+    indexes?: ObjectStoreIndex[]
+}
+
+export type IdbClientConfig = Map<string, IdbStoresConfig>

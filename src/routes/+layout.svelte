@@ -6,15 +6,17 @@
     import type { Notification } from "$lib/types"
     import ThePageTransition from "$lib/components/the-page-transition.svelte"
     import { notificationsContext } from "$lib/context"
+    import { onMount } from "svelte"
 
     export let data
 
-    let notifications: Notification[] = [] 
+    let notifications: Notification[] = []
     notificationsContext.set({
         add: (notif: Notification) => {
             notifications = [...notifications, notif]
         },
     })
+    const { add: notify } = notificationsContext.get()
     const cutNotifList = () => {
         notifications = notifications.slice(1)
     }
@@ -39,6 +41,16 @@
             showNotification()
         }
     }
+
+    onMount(() => {
+        if (!data.is_success) {
+            notify({
+                message: data.reason || "Something went wrong",
+                level: 2,
+                showTime: 5000,
+            })
+        }
+    })
 </script>
 
 <ModalsRoot>
@@ -47,7 +59,7 @@
         class="absolute left-1/2 -translate-x-1/2 top-24 z-9999"
     />
 
-    {#if !data.is_success}
+    <!-- {#if !data.is_success}
         <div
             id="notify-block"
             class="absolute top-1/2 left-1/2 width[100px] height[100px] bg-red-500"
@@ -58,7 +70,7 @@
                 </span>
             </p>
         </div>
-    {/if}
+    {/if} -->
 
     <TheHeader class="h-full" />
 
@@ -97,7 +109,7 @@
             "footer" auto
             / auto;
         // gap: ;
-        
+
         @media screen and (min-width: 768px) {
             grid-template:
                 "header" var(--header-height-desktop)
