@@ -3,6 +3,10 @@ import type { ObjectStoreConfig, IWord, WordApiData } from "$lib/types"
 import { copyObj } from "$lib/utils/helpers"
 
 type StoredWordData = Partial<WordApiData>
+
+const INDEX_NAMES = {
+    DICTS: "dicts"
+}
 export default class Word implements IWord {
     word: string
     data: StoredWordData
@@ -15,8 +19,8 @@ export default class Word implements IWord {
     }
     static STORE_INDEXES = [
         {
-            name: "dicts",
-            keyPath: "dicts",
+            name: INDEX_NAMES.DICTS,
+            keyPath: INDEX_NAMES.DICTS,
             option: { unique: false, multiEntry: true },
         },
         // {
@@ -56,5 +60,9 @@ export default class Word implements IWord {
 
     static get(word: string): Promise<Word> {
         return IdbManager.get<Word>(this.STORE_NAME, word)
+    }
+
+    static getFromDict(name: string): Promise<Word[]> {
+        return IdbManager.getIndex<Word[]>(this.STORE_NAME, INDEX_NAMES.DICTS, { key: name })
     }
 }

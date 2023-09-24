@@ -3,8 +3,10 @@
     import type { PageData } from "./$types"
 
     export let data: PageData
+    console.log("saved", data);
+    
 </script>
 
 <section>
-    <AlphabetWordList wordList={data.wordsList} />
+    <AlphabetWordList wordList={data.words} />
 </section>

@@ -17,8 +17,17 @@ export default class Dictionary implements IDictionary {
         this.words = words
     }
 
+    static async isExisting(name: string) {
+        const dict = await this.get(name)
+        return Boolean(dict)
+    }
+
     static create(dict: IDictionary) {
         return IdbManager.insert(this.STORE_NAME, dict)
+    }
+
+    static get(name: string): Promise<IDictionary> {
+        return IdbManager.get(this.STORE_NAME, name) as Promise<IDictionary>
     }
 
     static getAll(): Promise<IDictionary[]> {

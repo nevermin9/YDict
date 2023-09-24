@@ -4,7 +4,8 @@ import { QueueController } from "../helpers"
 
 let _client: IdbClient | null = null
 const setClient = (client: IdbClient) => {
-    _client = client
+    if (!_client)
+        _client = client
     return _client
 }
 const getClient = () => {
@@ -15,6 +16,9 @@ export default class IdbManager {
     static queue = new QueueController()
 
     static async init(name: string, version: number, config: IdbClientConfig) {
+        if (getClient()) {
+            return
+        }
         let _c: IdbClient = new IdbClient(name, version)
         _c = await _c.createClient(config)
         setClient(_c)
@@ -44,26 +48,6 @@ export default class IdbManager {
         return getClient() as IdbClient
     }
 
-    // static async insert<T>(storeName: string, data: T): Promise<T> {
-    //     try {
-    //         const db = await this.#getDB()
-
-    //         return new Promise((resolve, reject) => {
-    //             return db.startTransaction(storeName, "readwrite").then((store) => {
-    //                 const request = store.add(data)
-    //                 request.onsuccess = (e) => {
-    //                     resolve((e.target as IDBRequest).result as T)
-    //                 }
-    //                 request.onerror = (e_1) => {
-    //                     reject(e_1)
-    //                 }
-    //             })
-    //         })
-    //     } catch (err) {
-    //         return Promise.reject(err)
-    //     }
-    // }
-    // //
     static async getAll(
         storeName: string,
         options?: { count?: number; query?: string | IDBKeyRange }
@@ -113,6 +97,25 @@ export default class IdbManager {
                     const request = store.put(data)
                     request.onsuccess = (e) => {
                         resolve((e.target as IDBRequest).result as string)
+                    }
+                    request.onerror = (e_1) => {
+                        reject(e_1)
+                    }
+                })
+            })
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    static async getIndex<T>(storeName: string, indexName: string, options: {key: IDBKeyRange | string, count?: number}): Promise<T> {
+        try {
+            const db = await this.#getDB()
+            return new Promise((resolve, reject) => {
+                return db.startTransaction(storeName, "readonly").then((store) => {
+                    const request = store.index(indexName).getAll(options.key, options?.count)
+                    request.onsuccess = (e) => {
+                        resolve((e.target as IDBRequest).result as T)
                     }
                     request.onerror = (e_1) => {
                         reject(e_1)

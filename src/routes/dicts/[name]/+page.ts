@@ -1,6 +1,7 @@
 import type { PageLoad } from "./$types"
+import { error } from "@sveltejs/kit"
 import { browser } from "$app/environment"
-import { Dictionary } from "$lib/utils/idb/models"
+import { Word, Dictionary } from "$lib/utils/idb/models"
 
 export const load: PageLoad = async ({ params }) => {
     if (!browser) {
@@ -11,9 +12,19 @@ export const load: PageLoad = async ({ params }) => {
 
     const { name } = params
 
-    // const result = Dictionary.get
+    if (!await Dictionary.isExisting(name)) {
+        throw error(404, {message: "Cannot find such a dictionary"})
+    }
+
+    let words: Word[] = []
+
+    try {
+        words = await Word.getFromDict(name)
+    } catch (err) {
+        console.log("result", err)
+    }
 
     return {
-        word: "fuck"
+        words,
     }
 }
