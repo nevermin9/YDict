@@ -12,6 +12,10 @@
     })
 </script>
 
-<section>
-    <AlphabetWordList wordList={data.words} />
+<section class="flex flex-col items-center pt-2 gap-2">
+    <h1 class="text-3xl text-deepblue-500 underline">
+        {data.name}
+    </h1>
+
+    <AlphabetWordList class="w-full" wordList={data.words} />
 </section>

@@ -15,12 +15,12 @@
 
 <ul class="{clazz}">
     {#each definitions as def, i (i)}
-        <li>
+        <li class="mb-2">
             <CheckboxContent
                 value={def.definition}
                 bind:group={selectedDefs}
                 checked={checkedDefs.includes(def.definition)}
-                class="flex items-start gap-2 max-w-screen-md mx-auto mb-2"
+                class="flex items-start gap-2"
             >
                 <WordDef wordDefinition={def} />
             </CheckboxContent>

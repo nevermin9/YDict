@@ -5,7 +5,7 @@
     export let pronunciation: string | undefined
 </script>
 
-<div class="max-w-screen-md m-auto {clazz}">
+<div class="{clazz}">
     <h1
         class="text-3xl w-full px-2 pt-1 pb-2 bg-sand-300 text-deepblue-500 shadow-md shadow-black rounded"
     >

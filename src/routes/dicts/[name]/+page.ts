@@ -26,5 +26,6 @@ export const load: PageLoad = async ({ params }) => {
 
     return {
         words,
+        name,
     }
 }
