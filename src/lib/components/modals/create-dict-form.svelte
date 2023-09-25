@@ -1,4 +1,8 @@
-<script context="module" lang="ts"></script>
+<script context="module" lang="ts">
+    const MIN_DICT_NAME_LENGTH = 3
+    const RESERVED_WORDS = ["saved"]
+    const MAX_DICT_NAME_LENGTH = 20
+</script>
 
 <script lang="ts">
     import ModalBody from "./components/modal-body.svelte"
@@ -43,7 +47,7 @@
         ]
     }
     const validate = (name: string) => {
-        if (name.length < 3) {
+        if (name.length < MIN_DICT_NAME_LENGTH) {
             isValidLength = false
             isValidName = false
             return
@@ -51,7 +55,7 @@
 
         isValidLength = true
 
-        if (name.toLowerCase() === "saved") {
+        if (RESERVED_WORDS.includes(name.toLowerCase())) {
             isValidName = false
             return
         }
@@ -113,7 +117,7 @@
                     type="text"
                     name="name"
                     placeholder="Name"
-                    maxlength="20"
+                    maxlength="{MAX_DICT_NAME_LENGTH}"
                     autocomplete="off"
                 />
             </label>
