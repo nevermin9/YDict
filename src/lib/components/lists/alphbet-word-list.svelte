@@ -20,17 +20,6 @@
     $: {
         dict = wordList.reduce(createDict, dict)
     }
-
-    const wordMenuOptions = [
-        {
-            text: "Update",
-            value: "update",
-        },
-        {
-            text: "Remove",
-            value: "remove",
-        }
-    ]
 </script>
 
 <ul class="flex flex-col gap-2 {clazz}">

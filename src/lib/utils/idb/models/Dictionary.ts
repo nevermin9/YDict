@@ -13,6 +13,7 @@ export default class Dictionary implements IDictionary {
     static MIN_DICT_NAME_LENGTH = 3
     static RESERVED_WORDS = ["saved"]
     static MAX_DICT_NAME_LENGTH = 20
+    static DEFAULT_DICT = "saved"
 
     constructor({ name, description, words = [] }: IDictionary) {
         this.name = name

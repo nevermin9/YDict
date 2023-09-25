@@ -2,16 +2,19 @@
     import SDropdown from "$lib/components/form/s-dropdown.svelte"
     import SvgRoot from "$lib/components/svg/svg-root.svelte"
     import MoreIco from "$lib/components/svg/more-ico.svelte"
+    import { Word } from "$lib/utils/idb/models"
+    import {page} from "$app/stores"
 
     // export let options: { text: string; value: any }[] = []
     let clazz = ""
     export { clazz as class }
     export let word: string
+    export let dict: string
     let search = new URLSearchParams()
     search.set("search", word)
 
-    const removeWord = () => {
-        console.log("removeWord")
+    const deleteWord = () => {
+        console.log("removeWord", $page)
     }
 </script>
 
@@ -51,13 +54,13 @@
         <li class="h-[1px] w-full bg-deepblue-500" />
 
         <li>
-            <button type="button" on:click={() => removeWord()}> Remove </button>
+            <button type="button" on:click={() => deleteWord()}> Delete </button>
         </li>
 
         <li class="h-[1px] w-full bg-deepblue-500" />
 
         <li>
-            <button type="button" on:click={() => removeWord()}> Remove All </button>
+            <button type="button" on:click={() => deleteWord()}> Delete everywhere </button>
         </li>
     </ul>
 </SDropdown>

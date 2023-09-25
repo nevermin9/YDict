@@ -65,4 +65,14 @@ export default class Word implements IWord {
     static getFromDict(name: string): Promise<Word[]> {
         return IdbManager.getIndex<Word[]>(this.STORE_NAME, INDEX_NAMES.DICTS, { key: name })
     }
+
+    static delete(word: string, dicts?: string[]) {
+        if (dicts?.length) {
+            return IdbManager.get<Word>(this.STORE_NAME, word).then((w) => {
+                w.dicts = w.dicts.filter((d) => !dicts.includes(d))
+                return IdbManager.insert(this.STORE_NAME, w)
+            })
+        }
+        return IdbManager.delete(this.STORE_NAME, word)
+    }
 }

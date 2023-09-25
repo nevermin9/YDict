@@ -126,16 +126,23 @@ export default class IdbManager {
             return Promise.reject(err)
         }
     }
-    //
-    // static async get(storeName, key) {
-    //   return _client.get(storeName, key)
-    // }
-    //
-    // static async update(storeName, data) {
-    //   return _client.update(storeName, data)
-    // }
-    //
-    // static async delete(storeName, key) {
-    //   return _client.delete(storeName, key)
-    // }
+
+    static async delete(storeName: string, key: string | IDBKeyRange): Promise<boolean> {
+        try {
+            const db = await this.#getDB()
+            return new Promise((resolve, reject) => {
+                return db.startTransaction(storeName, "readwrite").then((store) => {
+                    const request = store.delete(key)
+                    request.onsuccess = () => {
+                        resolve(true)
+                    }
+                    request.onerror = (e_1) => {
+                        reject(e_1)
+                    }
+                })
+            })
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
 }
