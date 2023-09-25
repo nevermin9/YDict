@@ -100,6 +100,8 @@
                 name="search"
                 class="text-deepblue-500 bg-transparent outline-0 border-b-2 border-deepblue-500"
                 bind:value={search}
+                maxlength="50"
+                autocomplete="off"
             />
         </label>
 

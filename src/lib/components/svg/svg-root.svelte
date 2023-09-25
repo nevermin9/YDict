@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
     export let width = "24"
     export let height = "24"
-    let clazz
+    let clazz = ""
     export { clazz as class }
 </script>
 
