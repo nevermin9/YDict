@@ -1,3 +1,8 @@
+<script lang="ts" context="module">
+    export const MIN_SEARCH_LENGTH = 3
+    export const MAX_SEARCH_LENGTH = 50
+</script>
+
 <script lang="ts">
     import Loader from "$lib/components/loader.svelte"
     import SButton from "$lib/components/buttons/s-button.svelte"
@@ -11,7 +16,6 @@
     let searchResult: string[] = []
     let p: Promise<string[] | void> | null = null
     let abortController: AbortController | null = null
-    const MIN_SEARCH_LENGTH = 3
 
     const doSearch = async () => {
         if (search.length < MIN_SEARCH_LENGTH) return
@@ -100,7 +104,7 @@
                 name="search"
                 class="text-deepblue-500 bg-transparent outline-0 border-b-2 border-deepblue-500"
                 bind:value={search}
-                maxlength="50"
+                maxlength="{MAX_SEARCH_LENGTH}"
                 autocomplete="off"
             />
         </label>

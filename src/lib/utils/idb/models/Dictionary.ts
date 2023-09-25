@@ -10,6 +10,9 @@ export default class Dictionary implements IDictionary {
     static STORE_CONFIG = {
         keyPath: "name",
     }
+    static MIN_DICT_NAME_LENGTH = 3
+    static RESERVED_WORDS = ["saved"]
+    static MAX_DICT_NAME_LENGTH = 20
 
     constructor({ name, description, words = [] }: IDictionary) {
         this.name = name

@@ -1,9 +1,3 @@
-<script context="module" lang="ts">
-    const MIN_DICT_NAME_LENGTH = 3
-    const RESERVED_WORDS = ["saved"]
-    const MAX_DICT_NAME_LENGTH = 20
-</script>
-
 <script lang="ts">
     import ModalBody from "./components/modal-body.svelte"
     import ModalHeader from "./components/modal-header.svelte"
@@ -47,7 +41,7 @@
         ]
     }
     const validate = (name: string) => {
-        if (name.length < MIN_DICT_NAME_LENGTH) {
+        if (name.length < Dictionary.MIN_DICT_NAME_LENGTH) {
             isValidLength = false
             isValidName = false
             return
@@ -55,7 +49,7 @@
 
         isValidLength = true
 
-        if (RESERVED_WORDS.includes(name.toLowerCase())) {
+        if (Dictionary.RESERVED_WORDS.includes(name.toLowerCase())) {
             isValidName = false
             return
         }
@@ -117,7 +111,7 @@
                     type="text"
                     name="name"
                     placeholder="Name"
-                    maxlength="{MAX_DICT_NAME_LENGTH}"
+                    maxlength="{Dictionary.MAX_DICT_NAME_LENGTH}"
                     autocomplete="off"
                 />
             </label>
