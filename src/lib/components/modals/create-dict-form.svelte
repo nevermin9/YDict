@@ -49,7 +49,7 @@
 
         isValidLength = true
 
-        if (Dictionary.RESERVED_WORDS.includes(name.toLowerCase())) {
+        if (Dictionary.RESERVED_NAMES.includes(name.toLowerCase())) {
             isValidName = false
             return
         }

@@ -2,16 +2,15 @@
     import AlphabetWordList from "$lib/components/lists/alphbet-word-list.svelte"
     import { onMount } from "svelte"
     import type { PageData } from "./$types"
+    import {page} from "$app/stores"
 
     export let data: PageData
-    console.log("[name]", data);
-    
 
     onMount(() => {
-        console.log("onMount")
+        console.log("onMount", $page)
     })
 </script>
 
 <section>
-    <AlphabetWordList wordList={data.words} />
+    <AlphabetWordList dictName={$page.params.name} wordList={data.words} />
 </section>
