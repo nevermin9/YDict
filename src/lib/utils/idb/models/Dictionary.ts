@@ -11,7 +11,8 @@ export default class Dictionary implements IDictionary {
         keyPath: "name",
     }
     static MIN_DICT_NAME_LENGTH = 3
-    static RESERVED_WORDS = ["saved"]
+    static DEFAULT_DICT = "saved"
+    static RESERVED_NAMES = [this.DEFAULT_DICT]
     static MAX_DICT_NAME_LENGTH = 20
 
     constructor({ name, description, words = [] }: IDictionary) {
@@ -39,6 +40,7 @@ export default class Dictionary implements IDictionary {
 
     static async getAllDictsNames() {
         const dicts = await this.getAll()
-        return dicts.map((dict: IDictionary) => dict.name)
+        const _d = dicts.map((dict: IDictionary) => dict.name)
+        return [this.DEFAULT_DICT, ..._d]
     }
 }

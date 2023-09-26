@@ -9,7 +9,7 @@ export const checkModalName = (name: string): name is ModalName => {
 }
 
 export type ModalsRootContext = {
-    open: <T>(v: { name: ModalName; data?: T | null }) => Promise<unknown>
+    open: <T>(v: { name: ModalName; data?: T | null }) => Promise<T>
     close: <T>(...args: T[]) => void
 }
 
