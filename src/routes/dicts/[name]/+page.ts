@@ -12,7 +12,7 @@ export const load: PageLoad = async ({ params }) => {
 
     const { name } = params
 
-    if (!await Dictionary.isExisting(name)) {
+    if (!await Dictionary.isExisting(name) && Dictionary.DEFAULT_DICT !== name.toLowerCase()) {
         throw error(404, {message: "Cannot find such a dictionary"})
     }
 

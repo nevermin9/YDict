@@ -9,7 +9,7 @@
 
     const { close } = modalsRootContext.get()
     let dictsNames: string[] = []
-    let selectedDicts = ["saved"]
+    let selectedDicts: string[] = [Dictionary.DEFAULT_DICT]
 
     const getDictsNames = async () => {
         dictsNames = await Dictionary.getAllDictsNames()
@@ -20,7 +20,7 @@
     })
 
     const closeModal = async () => {
-        close(selectedDicts.filter((d) => d !== "saved"))
+        close(selectedDicts)
     }
 </script>
 
@@ -32,22 +32,7 @@
     <ModalContent class="flex flex-col justify-between">
         <div class="m-auto max-h-[250px] h-full">
             <ul class="grid auto-rows-min items-center gap-1 h-full pr-4 overflow-auto">
-                <li>
-                    <label class="inline-block px-3 py-1 clickable-light" for="saved">
-                        <input
-                            id="saved"
-                            name="saved"
-                            value="saved"
-                            bind:group={selectedDicts}
-                            type="checkbox"
-                            disabled
-                        />
-
-                        <span class="text-deepblue-500 uppercase"> Saved </span>
-                    </label>
-                </li>
-
-                {#each dictsNames as dictName}
+                {#each dictsNames as dictName, i (i)}
                     <li>
                         <label class="inline-block px-3 py-1 clickable-light" for={dictName}>
                             <input

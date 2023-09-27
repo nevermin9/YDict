@@ -3,18 +3,42 @@
     import SvgRoot from "$lib/components/svg/svg-root.svelte"
     import MoreIco from "$lib/components/svg/more-ico.svelte"
     import { Word } from "$lib/utils/idb/models"
-    import {page} from "$app/stores"
+    import { notificationsContext } from "$lib/context"
+    import { createEventDispatcher } from "svelte"
 
-    // export let options: { text: string; value: any }[] = []
     let clazz = ""
     export { clazz as class }
     export let word: string
     export let dict: string
+    const dispatch = createEventDispatcher()
     let search = new URLSearchParams()
     search.set("search", word)
 
-    const deleteWord = () => {
-        console.log("removeWord", $page)
+    const { add: notify } = notificationsContext.get()
+
+    const deleteWord = (_d?: string[]) => {
+        return Word.delete(word, _d)
+            .then(res => {
+                if (res) {
+                    notify({
+                        message: `<span class="text-lime-50">Word "${word}" is deleted<span>`,
+                        level: "INFO",
+                    })
+                    dispatch("deleted", word)
+                } else {
+                    notify({
+                        message: `<span class="text-lime-50">Word "${word}" is not deleted<span>`,
+                        level: "ERROR",
+                    })
+                }
+            })
+            .catch((err) => {
+                notify({
+                    message: `<span class="text-lime-50">Word "${word}" is not deleted<span>`,
+                    level: "ERROR",
+                })
+                throw err
+            })
     }
 </script>
 
@@ -54,7 +78,7 @@
         <li class="h-[1px] w-full bg-deepblue-500" />
 
         <li>
-            <button type="button" on:click={() => deleteWord()}> Delete </button>
+            <button type="button" on:click={() => deleteWord([dict])}> Delete </button>
         </li>
 
         <li class="h-[1px] w-full bg-deepblue-500" />
