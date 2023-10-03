@@ -108,7 +108,7 @@ export default class IdbManager {
         }
     }
 
-    static async getIndex<T>(storeName: string, indexName: string, options: {key: IDBKeyRange | string, count?: number}): Promise<T> {
+    static async getIndexAll<T>(storeName: string, indexName: string, options: {key: IDBKeyRange | string, count?: number}): Promise<T> {
         try {
             const db = await this.#getDB()
             return new Promise((resolve, reject) => {
@@ -149,33 +149,38 @@ export default class IdbManager {
     static async getIndexWithCursor<T>(
         storeName: string,
         indexName: string,
-        options: { key: string | IDBKeyRange; dir?: IDBCursorDirection, count?: number, advance?: number}
+        options: { key?: string | IDBKeyRange; dir?: IDBCursorDirection, count?: number, advance?: number}
     ): Promise<T[]> {
         try {
             const db = await this.#getDB()
             return new Promise((resolve, reject) => {
                 return db.startTransaction(storeName, "readonly").then((store) => {
                     const request = store.index(indexName).openCursor(options.key, options?.dir)
+                    const list: T[] = []
+                    let jumped = false
+                    let count = 0
+
+                    console.log("options", options)
                     request.onsuccess = (e) => {
                         const cursor = (e.target as IDBRequest).result as IDBCursorWithValue
 
-                        if (!cursor) {
-                            reject(new Error(`No cursor found, store: ${storeName}, index: ${indexName}, options: ${JSON.stringify(options)}j`))
+                        console.log("cursor", cursor)
+                        console.log("count", count)
+                        
+                        if (!cursor || (options?.count && count >= options.count)) {
+                            console.log("list", list.length)
+                            return resolve(list as T[])
                         }
 
-                        if (options?.advance) {
+                        if (!jumped && options?.advance) {
+                            jumped = true
                             cursor.advance(options.advance)
-                        }
-
-                        const list: T[] = []
-                        while (cursor) {
-                            if (options?.count && list.length >= options.count) {
-                                break
-                            }
+                        } else {
                             list.push(cursor.value)
+
+                            count += 1
                             cursor.continue()
                         }
-                        resolve(list as T[])
                     }
                     request.onerror = (e_1) => {
                         reject(e_1)

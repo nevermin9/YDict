@@ -1,25 +1,24 @@
 import type { PageLoad } from "./$types"
-import { error } from "@sveltejs/kit"
+import { error, redirect } from "@sveltejs/kit"
 import { browser } from "$app/environment"
 import { Word, Dictionary } from "$lib/utils/idb/models"
 
-const PAGIANATION = {
+const PAGINATION = {
     limit: 10,
     page: 1,
 }
 
-export const load: PageLoad = async ({ params, depends, url }) => {
+export const load: PageLoad = async ({ params, url }) => {
     if (!browser) {
-        return {
-            word: "fuck"
-        }
+        return {}
     }
 
     const { name } = params
-    let page = url.searchParams.get("page")
+    const _p = url.searchParams.get("page")
+    const page = _p ? parseInt(_p, 10) : PAGINATION.page
 
-    if (!page) {
-        page = PAGIANATION.page.toString()
+    if (Number.isNaN(page)) {
+        throw error(400, {message: "Invalid page number"})
     }
 
     if (!await Dictionary.isExisting(name)) {
@@ -29,18 +28,16 @@ export const load: PageLoad = async ({ params, depends, url }) => {
     let words: Word[] = []
 
     try {
-        words = await Word.getFromDict(name)
+        words = await Word.getPaginated(name, page, PAGINATION.limit)
     } catch (err) {
         console.log("result", err)
     }
 
     console.log("words", words)
 
-    depends("dict:name")
-
     return {
         words,
         name,
-        page: 1,
+        page,
     }
 }

@@ -63,7 +63,7 @@ export default class Word implements IWord {
     }
 
     static getFromDict(name: string): Promise<Word[]> {
-        return IdbManager.getIndex<Word[]>(this.STORE_NAME, INDEX_NAMES.DICTS, { key: name })
+        return IdbManager.getIndexAll<Word[]>(this.STORE_NAME, INDEX_NAMES.DICTS, { key: name })
     }
 
     static delete(word: string, dicts?: string[]): Promise<boolean> {
@@ -81,7 +81,8 @@ export default class Word implements IWord {
         return IdbManager.delete(this.STORE_NAME, word)
     }
 
-    static getWordsPaginated(dict: string, page: number, limit: number): Promise<Word[]> {
-        return IdbManager.getIndexWithCursor<Word>(this.STORE_NAME, INDEX_NAMES.DICTS, { key: dict, count: limit, advance: page * limit })
+    static getPaginated(dict: string, page: number, limit: number): Promise<Word[]> {
+        const advance = (page - 1) * limit
+        return IdbManager.getIndexWithCursor<Word>(this.STORE_NAME, INDEX_NAMES.DICTS, { key: dict, count: limit, advance })
     }
 }
