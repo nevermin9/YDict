@@ -49,22 +49,26 @@ export default class Dictionary implements IDictionary {
     }
 
     static async increaseLength(names: string[]) {
-        for (const name of names) {
-            const dict = await this.get(name)
-            if (dict) {
-                dict.length++
-                await this.save(dict)
-            }
-        }
+        await Promise.all(names.map(n => {
+            return this.get(n)
+                .then(dict => {
+                    if (dict) {
+                        dict.length++
+                        return this.save(dict)
+                    }
+                })
+        }))
     }
 
     static async decreaseLength(names: string[]) {
-        for (const name of names) {
-            const dict = await this.get(name)
-            if (dict) {
-                dict.length--
-                await this.save(dict)
-            }
-        }
+        await Promise.all(names.map(n => {
+            return this.get(n)
+                .then(dict => {
+                    if (dict) {
+                        dict.length--
+                        return this.save(dict)
+                    }
+                })
+        }))
     }
 }
