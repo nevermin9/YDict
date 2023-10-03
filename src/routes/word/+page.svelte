@@ -5,7 +5,7 @@
     import SButton from "$lib/components/buttons/s-button.svelte"
     import WordTitle from "$lib/components/word-def/word-title.svelte"
     import WordDefsList from "$lib/components/word-def/defs-list.svelte"
-    import { Word } from "$lib/utils/idb/models"
+    import { Word, Dictionary } from "$lib/utils/idb/models"
     import { modalsRootContext, notificationsContext } from "$lib/context"
 
     export let data: PageData
@@ -32,7 +32,10 @@
     const saveWord = (dicts: string[]) => {
         const w = Word.create(data.searchedWord, selectedDefs, dicts)
         
-        return Word.save(w).then(() => {
+        return Word.save(w).then(async () => {
+            await Dictionary.increaseLength(dicts)
+            console.log("saved", dicts);
+            
             notify({
                 message: `<span class="text-lime-50">Word "${w.word}" is saved<span>`,
                 level: "INFO",
@@ -60,7 +63,7 @@
     }
 
     const updateWord = () => {
-        const w = Word.create(data.searchedWord, selectedDefs, data.wordFromDB?.dicts || [])
+        const w = Word.create(data.searchedWord, selectedDefs, data.wordFromDB!.dicts)
 
         return Word.save(w).then(() => {
             notify({

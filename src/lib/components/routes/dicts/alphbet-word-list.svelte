@@ -1,24 +1,30 @@
 <script lang="ts">
     import type { IWord } from "$lib/types"
     import WordActionsDropdown from "$lib/components/word-def/word-actions-dropdown.svelte";
+    import { invalidate } from "$app/navigation"
 
     let clazz = ""
     export { clazz as class }
     export let wordList: IWord[] = []
+    export let dictName: string
 
-    const createDict = (dict: Map<string, IWord[]>, current: IWord) => {
+    const createDict = (_d: Map<string, IWord[]>, current: IWord) => {
         const firstLetter = current.word[0].toUpperCase()
-        if (dict.has(firstLetter)) {
-            dict.get(firstLetter)!.push(current)
+        if (_d.has(firstLetter)) {
+            _d.get(firstLetter)!.push(current)
         } else {
-            dict.set(firstLetter, [current])
+            _d.set(firstLetter, [current])
         }
-        return dict
+        return _d
     }
 
-    let dict = new Map<string, IWord[]>()
+    let dict: Map<string, IWord[]>
     $: {
-        dict = wordList.reduce(createDict, dict)
+        dict = wordList.reduce(createDict, new Map)
+    }
+
+    const onDelete = () => {
+        return invalidate("dict:name")
     }
 </script>
 
@@ -41,7 +47,7 @@
                         {w.word}
                     </a>
 
-                    <WordActionsDropdown word={w.word} />
+                    <WordActionsDropdown on:deleted={onDelete} dict={dictName} word={w} />
                 </li>
             {/each}
         </ul>

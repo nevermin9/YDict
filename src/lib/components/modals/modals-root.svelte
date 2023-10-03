@@ -9,6 +9,7 @@
     let data = null
 
     let resolve: (...args: any[]) => void
+    let reject: (...args: any[]) => void
 
     const reset = () => {
         name = ""
@@ -18,10 +19,11 @@
     const open = <T>({ name: _name, data: _data = null }: {name: ModalName, data?: T | null}) => {
         const isValid = checkModalName(_name)
         if (!isValid) throw new Error("[modals-root.svelte] invalid modal name")
-        return new Promise((res) => {
+        return new Promise<T>((res, rej) => {
             name = _name
             data = _data
             resolve = res
+            reject = rej
         }).finally(() => {
             reset()
         })
@@ -31,6 +33,7 @@
     modalsRootContext.set({
         open,
         close: (...args) => resolve(...args),
+        reject: (...args) => reject(...args),
     })
 </script>
 

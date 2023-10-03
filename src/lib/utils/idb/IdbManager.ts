@@ -145,4 +145,45 @@ export default class IdbManager {
             return Promise.reject(err)
         }
     }
+
+    static async getIndexWithCursor<T>(
+        storeName: string,
+        indexName: string,
+        options: { key: string | IDBKeyRange; dir?: IDBCursorDirection, count?: number, advance?: number}
+    ): Promise<T[]> {
+        try {
+            const db = await this.#getDB()
+            return new Promise((resolve, reject) => {
+                return db.startTransaction(storeName, "readonly").then((store) => {
+                    const request = store.index(indexName).openCursor(options.key, options?.dir)
+                    request.onsuccess = (e) => {
+                        const cursor = (e.target as IDBRequest).result as IDBCursorWithValue
+
+                        if (!cursor) {
+                            reject(new Error(`No cursor found, store: ${storeName}, index: ${indexName}, options: ${JSON.stringify(options)}j`))
+                        }
+
+                        if (options?.advance) {
+                            cursor.advance(options.advance)
+                        }
+
+                        const list: T[] = []
+                        while (cursor) {
+                            if (options?.count && list.length >= options.count) {
+                                break
+                            }
+                            list.push(cursor.value)
+                            cursor.continue()
+                        }
+                        resolve(list as T[])
+                    }
+                    request.onerror = (e_1) => {
+                        reject(e_1)
+                    }
+                })
+            })
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { PageData } from "./$types"
-    import AlphabetWordList from "$lib/components/lists/alphbet-word-list.svelte"
+    import AlphabetWordList from "$lib/components/routes/dicts/alphbet-word-list.svelte"
     import { page } from "$app/stores"
 
     export let data: PageData

@@ -9,8 +9,10 @@
     import SButton from "$lib/components/buttons/s-button.svelte"
     import { modalsRootContext } from "$lib/context"
     import { fade } from "svelte/transition"
+    import { onMount } from "svelte"
 
-    const { close: closeModal } = modalsRootContext.get()
+    const { close: closeModal, reject } = modalsRootContext.get()
+    let dictsNames: string[] = []
     let dictName = ""
     let dictDescription = ""
     let isValidName = false
@@ -25,23 +27,23 @@
             },
             {
                 valid: isValidName,
-                message: '"Saved" is reserved',
+                message: "The name is unique",
             },
         ]
         isValid = isValids.every((v) => v.valid)
     }
     
     const validate = (name: string) => {
-        if (name.length < Dictionary.MIN_DICT_NAME_LENGTH) {
+        const n = name.trim()
+        if (n.length < Dictionary.MIN_DICT_NAME_LENGTH) {
             isValidLength = false
             isValidName = false
-            console.log(1, "name", isValidName, "length", isValidLength)
             return
         }
 
         isValidLength = true
 
-        if (Dictionary.RESERVED_NAMES.includes(name.toLowerCase())) {
+        if (dictsNames.includes(n.toLowerCase())) {
             isValidName = false
             return
         }
@@ -54,8 +56,6 @@
     }
 
     const createDictionary = async () => {
-        console.log("is valid", isValid);
-        
         if (!isValid) {
             return
         }
@@ -65,9 +65,19 @@
             words: [],
         }
         const dictToCreate = new Dictionary(dict)
-        const result = await Dictionary.create(dictToCreate)
-        closeModal(result)
+        let result
+        try {
+            result = await Dictionary.save(dictToCreate)
+
+            closeModal(result)
+        } catch (e) {
+            reject(e)
+        }
     }
+
+    onMount(async () => {
+        dictsNames = await Dictionary.getAllDictsNames()
+    })
 
 </script>
 

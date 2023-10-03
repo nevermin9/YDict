@@ -11,6 +11,7 @@ export const checkModalName = (name: string): name is ModalName => {
 export type ModalsRootContext = {
     open: <T>(v: { name: ModalName; data?: T | null }) => Promise<T>
     close: <T>(...args: T[]) => void
+    reject: <T>(...args: T[]) => void
 }
 
 export const modalsRootContext = createContext<ModalsRootContext>(CTX_NAME)

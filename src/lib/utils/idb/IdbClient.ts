@@ -40,7 +40,7 @@ export default class IdbClient {
         for (const [name, _c] of config) {
             const store = this._db!.createObjectStore(name, _c.storeConfig)
 
-            if (!_c.indexes) {
+            if (!_c.indexes?.length) {
                 promises.push(this.#waitStoreComplete(store))
                 continue
             }

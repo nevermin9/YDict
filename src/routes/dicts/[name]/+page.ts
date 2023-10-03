@@ -3,7 +3,12 @@ import { error } from "@sveltejs/kit"
 import { browser } from "$app/environment"
 import { Word, Dictionary } from "$lib/utils/idb/models"
 
-export const load: PageLoad = async ({ params }) => {
+const PAGIANATION = {
+    limit: 10,
+    page: 1,
+}
+
+export const load: PageLoad = async ({ params, depends, url }) => {
     if (!browser) {
         return {
             word: "fuck"
@@ -11,8 +16,13 @@ export const load: PageLoad = async ({ params }) => {
     }
 
     const { name } = params
+    let page = url.searchParams.get("page")
 
-    if (!await Dictionary.isExisting(name) && Dictionary.DEFAULT_DICT !== name.toLowerCase()) {
+    if (!page) {
+        page = PAGIANATION.page.toString()
+    }
+
+    if (!await Dictionary.isExisting(name)) {
         throw error(404, {message: "Cannot find such a dictionary"})
     }
 
@@ -24,8 +34,13 @@ export const load: PageLoad = async ({ params }) => {
         console.log("result", err)
     }
 
+    console.log("words", words)
+
+    depends("dict:name")
+
     return {
         words,
         name,
+        page: 1,
     }
 }

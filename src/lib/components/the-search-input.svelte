@@ -47,6 +47,10 @@
             })
 
         searchResult = await p as string[]
+
+        if (searchResult.length === 0) {
+            searchResult = ["nothing"]
+        }
     }
 
     const debouncedDoSearch = debounce(doSearch, 500)
