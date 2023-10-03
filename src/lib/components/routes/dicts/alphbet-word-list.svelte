@@ -47,7 +47,7 @@
                         {w.word}
                     </a>
 
-                    <WordActionsDropdown on:deleted={onDelete} dict={dictName} word={w} />
+                    <WordActionsDropdown on:deleted dict={dictName} word={w} />
                 </li>
             {/each}
         </ul>

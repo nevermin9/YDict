@@ -1,21 +1,23 @@
 <script lang="ts">
     import type { PageData } from "./$types"
     import type { IWord } from "$lib/types"
-    import AlphabetWordList from "$lib/components/routes/dicts/alphbet-word-list.svelte"
     import { page } from "$app/stores"
-    import { goto } from "$app/navigation"
+    import { Word } from "$lib/utils/idb/models"
+    import AlphabetWordList from "$lib/components/routes/dicts/alphbet-word-list.svelte"
+    import Intersection from "$lib/components/Intersection.svelte"
 
     export let data: PageData
     let dictName = $page.params.name
-    let wordList: IWord[] = []
+    let wordList: IWord[] = data.words || []
+    let pageN = data.pagination?.page || 1
+    let limit = data.pagination?.limit || 10
 
-    $: {
-        wordList = wordList.concat(data.words || [])
-    }
-
-    const updatePath = () => {
-        const prevPage = data.page ? data.page : 1
-        goto(`?page=${prevPage + 1}`, { noScroll: true })
+    const updateList = async (nextPage = false) => {
+        if (nextPage) {
+            pageN += 1
+        }
+        const nextWords = await Word.getPaginated(dictName, pageN, limit)
+        wordList = [...wordList, ...nextWords]
     }
 </script>
 
@@ -24,21 +26,12 @@
         {dictName}
     </h1>
 
-    <button class="clickable-light">
-        <button on:click={() => updatePath()}>
-
-            Next page
-        </button>
-    </button>
-
     <AlphabetWordList
         {dictName}
         {wordList}
+        on:deleted={() => updateList()}
         class="w-full"
     />
-    <button class="clickable-light">
-        <button on:click={() => updatePath()}>
-            Next page
-        </button>
-    </button>
+
+    <Intersection on:intersected={() => updateList(true)} />
 </section>
