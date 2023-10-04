@@ -46,8 +46,6 @@ export default class IdbClient {
             }
 
             for (const index of _c.indexes) {
-                console.log(IdbClient.LOG_PREFIX, "create index", index.name)
-
                 store.createIndex(index.name, index.keyPath, index.option)
             }
 

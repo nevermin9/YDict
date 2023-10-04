@@ -36,7 +36,6 @@
     const calculatePosition = () => {
         if (root) {
             const rect = root.getBoundingClientRect()
-            console.log(rect.width);
             
             const rightSpace = window.innerWidth - rect.right
             const leftSpace = rect.left
@@ -82,8 +81,6 @@
             document.addEventListener("click", clickOutsideHandler)
         }
         if (_group.length >= 1 && !multiple) {
-            console.log("before close");
-            
             close()
         }
     }

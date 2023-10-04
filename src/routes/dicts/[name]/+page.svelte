@@ -11,13 +11,35 @@
     let wordList: IWord[] = data.words || []
     let pageN: number = data.pagination?.page || 1
     let limit = data.pagination?.limit || 10
-
-    const updateList = async (nextPage = false) => {
-        if (nextPage) {
-            pageN += 1
+    let alphabetIndexes: Map<string, number> = new Map()
+    const mapAlphabet = (wList: IWord[]) => {
+        for (let i = 0; i < wList.length; i++) {
+            const firstLetter = wList[i].word[0].toUpperCase()
+            if (!alphabetIndexes.has(firstLetter)) {
+                alphabetIndexes.set(firstLetter, i)
+            }
         }
+    }
+    $: mapAlphabet(wordList)
+
+    const nextPage = async () => {
+        pageN += 1
         const nextWords = await Word.getPaginated(dictName, pageN, limit)
-        wordList = nextPage ? [...wordList, ...nextWords] : nextWords
+        wordList = [...wordList, ...nextWords]
+    }
+
+    const updateList = async (event: CustomEvent<Word>) => {
+        const word = event.detail
+        const firstLetter = word.word[0].toUpperCase()
+        const index = alphabetIndexes.get(firstLetter)
+        if (index === undefined) return
+        for (let i = index; i < wordList.length; i++) {
+            if (wordList[i].word === word.word) {
+                wordList.splice(i, 1)
+                wordList = [...wordList]
+                break
+            }
+        }
     }
 </script>
 
@@ -29,9 +51,9 @@
     <AlphabetWordList
         {dictName}
         {wordList}
-        on:deleted={() => updateList()}
+        on:deleted={(e) => updateList(e)}
         class="w-full"
     />
 
-    <Intersection on:intersected={() => updateList(true)} />
+    <Intersection on:intersected={() => nextPage()} />
 </section>

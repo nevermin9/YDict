@@ -34,8 +34,6 @@
         
         return Word.save(w).then(async () => {
             await Dictionary.increaseLength(dicts)
-            console.log("saved", dicts);
-            
             notify({
                 message: `<span class="text-lime-50">Word "${w.word}" is saved<span>`,
                 level: "INFO",

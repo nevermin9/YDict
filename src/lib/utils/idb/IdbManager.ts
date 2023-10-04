@@ -160,15 +160,10 @@ export default class IdbManager {
                     let jumped = false
                     let count = 0
 
-                    console.log("options", options)
                     request.onsuccess = (e) => {
                         const cursor = (e.target as IDBRequest).result as IDBCursorWithValue
 
-                        console.log("cursor", cursor)
-                        console.log("count", count)
-                        
                         if (!cursor || (options?.count && count >= options.count)) {
-                            console.log("list", list.length)
                             return resolve(list as T[])
                         }
 

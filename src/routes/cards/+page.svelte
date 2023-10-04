@@ -42,7 +42,6 @@
         e.stopPropagation()
         // relative to what transform translate() is calculated?
         card.addEventListener("animationend", () => {
-            console.log("animationend")
             moveToNextCard()
         })
         card.classList.add(throwLeftAnimationClass)
