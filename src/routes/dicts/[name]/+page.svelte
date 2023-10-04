@@ -9,7 +9,7 @@
     export let data: PageData
     let dictName = $page.params.name
     let wordList: IWord[] = data.words || []
-    let pageN = data.pagination?.page || 1
+    let pageN: number = data.pagination?.page || 1
     let limit = data.pagination?.limit || 10
 
     const updateList = async (nextPage = false) => {
@@ -17,11 +17,7 @@
             pageN += 1
         }
         const nextWords = await Word.getPaginated(dictName, pageN, limit)
-        if (nextPage) {
-            wordList = [...wordList, ...nextWords]
-        } else {
-            wordList = nextWords
-        }
+        wordList = nextPage ? [...wordList, ...nextWords] : nextWords
     }
 </script>
 

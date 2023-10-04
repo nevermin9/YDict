@@ -78,16 +78,16 @@
 
         <li class="h-[1px] w-full bg-deepblue-500" />
 
-        {#if word.dicts.length > 1}
-            <li>
-                <button type="button" on:click={() => deleteWord([dict])}> Delete from {dict} </button>
-            </li>
-
-            <li class="h-[1px] w-full bg-deepblue-500" />
-        {/if}
-
         <li>
-            <button type="button" on:click={() => deleteWord()}> Delete everywhere </button>
+            <button type="button" on:click={() => deleteWord([dict])}> Delete from {dict} </button>
         </li>
+
+        {#if word.dicts.length > 1}
+            <li class="h-[1px] w-full bg-deepblue-500" />
+
+            <li>
+                <button type="button" on:click={() => deleteWord()}> Delete everywhere </button>
+            </li>
+        {/if}
     </ul>
 </SDropdown>

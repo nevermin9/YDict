@@ -1,12 +1,10 @@
 <script lang="ts">
-    // export let 
     import { createEventDispatcher } from "svelte"
 
     let clazz = ""
     export { clazz as class }
     export let isOpen = false
     export let multiple = false
-    // export let options: {text: string, value: any}[] = []
     let _group: any[] = []
     let root: HTMLDivElement
     let positionX = 0;
