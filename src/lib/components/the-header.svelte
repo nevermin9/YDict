@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import CardIco from "$lib/components/svg/card-ico.svelte"
+    // import CardIco from "$lib/components/svg/card-ico.svelte"
     import DictIco from "$lib/components/svg/dict-ico.svelte"
     import HomeIco from "$lib/components/svg/home-ico.svelte"
 
@@ -7,18 +7,18 @@
         id: string
         name: string
         href: string
-        icon: typeof CardIco
+        icon: typeof DictIco
         itIsMe: (pathname: string) => boolean
     }
 
     const MENU_ITEMS: MenuItem[] = [
-        {
-            id: "cards",
-            name: "Card sets",
-            href: "/cards",
-            icon: CardIco,
-            itIsMe: (pathname) => pathname.startsWith("/cards"),
-        },
+        // {
+        //     id: "cards",
+        //     name: "Card sets",
+        //     href: "/cards",
+        //     icon: CardIco,
+        //     itIsMe: (pathname) => pathname.startsWith("/cards"),
+        // },
         {
             id: "home",
             name: "Home",
@@ -53,7 +53,7 @@
             <ul
                 class="
         the-header__nav-list
-        grid grid-cols-3 grid-rows-1 gap-1 w-full h-full
+        grid grid-cols-{MENU_ITEMS.length} grid-rows-1 gap-1 w-full h-full
         "
             >
                 {#each MENU_ITEMS as item (item.id)}

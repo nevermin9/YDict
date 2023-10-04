@@ -17,7 +17,11 @@
             pageN += 1
         }
         const nextWords = await Word.getPaginated(dictName, pageN, limit)
-        wordList = [...wordList, ...nextWords]
+        if (nextPage) {
+            wordList = [...wordList, ...nextWords]
+        } else {
+            wordList = nextWords
+        }
     }
 </script>
 
