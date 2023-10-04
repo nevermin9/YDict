@@ -11,7 +11,16 @@
     let dictsNames: string[] = [...data.names]
 
     const openFormCreateDict = async () => {
-        const name = await open<string>({ name: "create-dict-form" })
+        let name
+        try {
+            name = await open<string>({ name: "create-dict-form" })
+        } catch (e) {
+            notify({
+                message: `<span class="text-lime-50">Dict is not created<span>`,
+                level: "ERROR",
+            } as Notification)
+            console.log(e)
+        }
 
         if (name) {
             notify({

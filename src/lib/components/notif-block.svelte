@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    const DEFAULT_SHOW_TIME = 3000
+    const DEFAULT_SHOW_TIME = 2000
 </script>
 
 <script lang="ts">
@@ -56,7 +56,7 @@
     }
 </script>
 
-<ul class="{clazz} pointer-events-none w-full px-4">
+<ul class="{clazz} pointer-events-none px-4">
     {#if message}
         <li
             transition:slide={{ duration: 400 }}

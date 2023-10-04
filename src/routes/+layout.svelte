@@ -75,7 +75,7 @@
     <TheHeader class="h-full" />
 
     <ThePageTransition class="main-wrapper h-full" refresh={data.pathname}>
-        <main class="flex-1 h-full px-2 pt-2 pb-6">
+        <main class="flex-1 h-full px-2 pt-2 pb-6 max-w-screen-md m-auto">
             <slot />
         </main>
     </ThePageTransition>
@@ -108,7 +108,7 @@
             "main" 1fr
             "footer" auto
             / auto;
-        // gap: ;
+        gap: 0.5rem;
 
         @media screen and (min-width: 768px) {
             grid-template:

@@ -9,25 +9,16 @@
     import SButton from "$lib/components/buttons/s-button.svelte"
     import { modalsRootContext } from "$lib/context"
     import { fade } from "svelte/transition"
+    import { onMount } from "svelte"
 
-    const { close: closeModal } = modalsRootContext.get()
+    const { close: closeModal, reject } = modalsRootContext.get()
+    let dictsNames: string[] = []
     let dictName = ""
     let dictDescription = ""
-    const createDictionary = async () => {
-        const dict = {
-            name: dictName,
-            description: dictDescription,
-            words: [],
-        }
-        const dictToCreate = new Dictionary(dict)
-        const result = await Dictionary.create(dictToCreate)
-        closeModal(result)
-    }
-
-    // let error = ""
     let isValidName = false
     let isValidLength = false
     let isValids: { valid: boolean; message: string }[] = []
+    let isValid = false
     const update = () => {
         isValids = [
             {
@@ -36,12 +27,15 @@
             },
             {
                 valid: isValidName,
-                message: '"Saved" is reserved',
+                message: "The name is unique",
             },
         ]
+        isValid = isValids.every((v) => v.valid)
     }
+    
     const validate = (name: string) => {
-        if (name.length < Dictionary.MIN_DICT_NAME_LENGTH) {
+        const n = name.trim()
+        if (n.length < Dictionary.MIN_DICT_NAME_LENGTH) {
             isValidLength = false
             isValidName = false
             return
@@ -49,7 +43,7 @@
 
         isValidLength = true
 
-        if (Dictionary.RESERVED_NAMES.includes(name.toLowerCase())) {
+        if (dictsNames.includes(n.toLowerCase())) {
             isValidName = false
             return
         }
@@ -60,6 +54,31 @@
         validate(dictName)
         update()
     }
+
+    const createDictionary = async () => {
+        if (!isValid) {
+            return
+        }
+        const dict = {
+            name: dictName,
+            description: dictDescription,
+            words: [],
+        }
+        const dictToCreate = new Dictionary(dict)
+        let result
+        try {
+            result = await Dictionary.save(dictToCreate)
+
+            closeModal(result)
+        } catch (e) {
+            reject(e)
+        }
+    }
+
+    onMount(async () => {
+        dictsNames = await Dictionary.getAllDictsNames()
+    })
+
 </script>
 
 <ModalBody class="bg-sand-300 rounded">
@@ -116,7 +135,7 @@
                 />
             </label>
 
-            <SButton class="shadow-md" type="submit">
+            <SButton disabled={!isValid} class="shadow-md" type="submit">
                 <span class="uppercase text-deepblue-500"> create </span>
             </SButton>
         </form>

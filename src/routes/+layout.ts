@@ -31,11 +31,25 @@ export const load: LayoutLoad = async ({ url }) => {
             ver,
             config,
         )
-
-        is_success = true
     } catch (e) {
         reason = (e as Error).message
     }
+
+    if (!await Dictionary.isExisting(Dictionary.DEFAULT_DICT)) {
+        try {
+            await Dictionary.save(new Dictionary({
+                name: Dictionary.DEFAULT_DICT,
+                description: "Default dictionary",
+            }))
+
+            is_success = true
+        } catch (e) {
+            reason = (e as Error).message
+        }
+    } else {
+        is_success = true
+    }
+
 
     return {
         is_success,

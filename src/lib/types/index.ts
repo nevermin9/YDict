@@ -7,7 +7,7 @@ export type * from "./utils"
 export interface IDictionary {
     name: string
     description: string
-    words: string[]
+    length: number
 }
 
 // export interface ICard {

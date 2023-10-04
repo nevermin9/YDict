@@ -108,7 +108,7 @@ export default class IdbManager {
         }
     }
 
-    static async getIndex<T>(storeName: string, indexName: string, options: {key: IDBKeyRange | string, count?: number}): Promise<T> {
+    static async getIndexAll<T>(storeName: string, indexName: string, options: {key: IDBKeyRange | string, count?: number}): Promise<T> {
         try {
             const db = await this.#getDB()
             return new Promise((resolve, reject) => {
@@ -126,16 +126,69 @@ export default class IdbManager {
             return Promise.reject(err)
         }
     }
-    //
-    // static async get(storeName, key) {
-    //   return _client.get(storeName, key)
-    // }
-    //
-    // static async update(storeName, data) {
-    //   return _client.update(storeName, data)
-    // }
-    //
-    // static async delete(storeName, key) {
-    //   return _client.delete(storeName, key)
-    // }
+
+    static async delete(storeName: string, key: string | IDBKeyRange): Promise<boolean> {
+        try {
+            const db = await this.#getDB()
+            return new Promise((resolve, reject) => {
+                return db.startTransaction(storeName, "readwrite").then((store) => {
+                    const request = store.delete(key)
+                    request.onsuccess = () => {
+                        resolve(true)
+                    }
+                    request.onerror = (e_1) => {
+                        reject(e_1)
+                    }
+                })
+            })
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
+
+    static async getIndexWithCursor<T>(
+        storeName: string,
+        indexName: string,
+        options: { key?: string | IDBKeyRange; dir?: IDBCursorDirection, count?: number, advance?: number}
+    ): Promise<T[]> {
+        try {
+            const db = await this.#getDB()
+            return new Promise((resolve, reject) => {
+                return db.startTransaction(storeName, "readonly").then((store) => {
+                    const request = store.index(indexName).openCursor(options.key, options?.dir)
+                    const list: T[] = []
+                    let jumped = false
+                    let count = 0
+
+                    console.log("options", options)
+                    request.onsuccess = (e) => {
+                        const cursor = (e.target as IDBRequest).result as IDBCursorWithValue
+
+                        console.log("cursor", cursor)
+                        console.log("count", count)
+                        
+                        if (!cursor || (options?.count && count >= options.count)) {
+                            console.log("list", list.length)
+                            return resolve(list as T[])
+                        }
+
+                        if (!jumped && options?.advance) {
+                            jumped = true
+                            cursor.advance(options.advance)
+                        } else {
+                            list.push(cursor.value)
+
+                            count += 1
+                            cursor.continue()
+                        }
+                    }
+                    request.onerror = (e_1) => {
+                        reject(e_1)
+                    }
+                })
+            })
+        } catch (err) {
+            return Promise.reject(err)
+        }
+    }
 }
