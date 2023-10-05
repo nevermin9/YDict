@@ -110,6 +110,7 @@
                 bind:value={search}
                 maxlength="{MAX_SEARCH_LENGTH}"
                 autocomplete="off"
+                placeholder="Search for a word"
             />
         </label>
 
