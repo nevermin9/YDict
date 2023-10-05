@@ -17,8 +17,8 @@
     const savedDefsObj = copyObj(data.wordFromDB?.data?.results || [])
     const savedDefs = savedDefsObj.map((def) => def.definition)
     const savedDefsLength = savedDefs.length
-    let checkedDefs: string[] = data.searchedWord?.results.map((def) => def.definition)
-        .filter((def) => savedDefs.includes(def))
+    let checkedDefs: string[] = data.searchedWord?.results?.map((def) => def.definition)
+        .filter((def) => savedDefs.includes(def)) || []
     let shouldUpdate = false
     $: {
         if (isSaved
