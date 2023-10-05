@@ -5,12 +5,6 @@
 
     export let data
     let selectedDefs: string[] = []
-
-    const generateExample = async () => {
-        const result = await fetch(`/api/create-sentence?with=${data.wordData.word}`).then((r) =>
-            r.json()
-        )
-    }
 </script>
 
 <section>
@@ -22,8 +16,6 @@
             word={data.wordData.word}
             pronunciation={data.wordData.data?.pronunciation?.all}
         />
-
-        <button type="button" on:click={() => generateExample()}> generate </button>
 
         {#each data.wordData?.data.results as result, i (i)}
             <CheckboxContent
