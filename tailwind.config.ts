@@ -29,6 +29,7 @@ export default {
                     700: "#2b3f66",
                 },
                 deepblue: {
+                    100: "#989ab3",
                     500: "#3D405B",
                 },
                 sand: {

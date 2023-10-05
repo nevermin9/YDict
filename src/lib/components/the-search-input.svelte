@@ -106,7 +106,7 @@
             <input
                 type="text"
                 name="search"
-                class="text-deepblue-500 bg-transparent outline-0 border-b-2 border-deepblue-500"
+                class="text-deepblue-500 bg-transparent outline-0 border-b-2 border-deepblue-500 placeholder-deepblue-500/40"
                 bind:value={search}
                 maxlength="{MAX_SEARCH_LENGTH}"
                 autocomplete="off"
