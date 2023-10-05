@@ -4,10 +4,12 @@
 </script>
 
 <script lang="ts">
-    import Loader from "$lib/components/loader.svelte"
-    import SButton from "$lib/components/buttons/s-button.svelte"
     import { debounce } from "lodash-es"
     import api from "$api"
+    import Loader from "$lib/components/loader.svelte"
+    import SButton from "$lib/components/buttons/s-button.svelte"
+    import SvgRoot from "$lib/components/svg/svg-root.svelte"
+    import SearchIco from "$lib/components/svg/search-ico.svelte"
 
     let clazz = ""
     export { clazz as class }
@@ -81,7 +83,7 @@
                 <li
                     class="
             flex
-            py-2 px-0.5 clickable-blue mb-1 rounded"
+            py-2 px-3 bg-slate-800 border border-slate-800 hover:border-slate-200 transition-all mb-1 rounded"
                 >
                     <a
                         class="block w-full flex-1"
@@ -115,7 +117,9 @@
         </label>
 
         <SButton type="submit">
-            <span class="font-bold text-md sm:text-lg uppercase"> look up </span>
+            <SvgRoot class="align-middle">
+                <SearchIco />
+            </SvgRoot>
         </SButton>
     </form>
 </div>
@@ -124,7 +128,7 @@
     .the-search-input {
         &__block-result-items {
             z-index: 10;
-            bottom: 40px;
+            bottom: 50px;
         }
     }
 </style>

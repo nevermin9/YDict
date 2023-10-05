@@ -55,7 +55,7 @@
             name: "dicts-list-modal",
         }) as string[]
 
-        if (dicts) {
+        if (dicts && dicts?.length) {
             return saveWord(dicts)
         }
     }
