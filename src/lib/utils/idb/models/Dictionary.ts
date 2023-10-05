@@ -11,7 +11,7 @@ export default class Dictionary implements IDictionary {
         keyPath: "name",
     }
     static MIN_DICT_NAME_LENGTH = 3
-    static DEFAULT_DICT = "saved"
+    static DEFAULT_DICT = "favorites"
     static RESERVED_NAMES = [this.DEFAULT_DICT]
     static MAX_DICT_NAME_LENGTH = 20
 
