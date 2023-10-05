@@ -91,7 +91,7 @@
     :global(html) {
         height: 100%;
         font-family: "Roboto Slab", serif;
-        @apply bg-green-500;
+        @apply bg-slate-900 text-slate-200;
         //background-color: #81B29A;
         //#3D405B - deepblue
         //#E07A5F - terra code (red)

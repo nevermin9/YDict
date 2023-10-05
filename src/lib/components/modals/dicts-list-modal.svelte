@@ -34,7 +34,7 @@
             <ul class="grid auto-rows-min items-center gap-1 h-full pr-4 overflow-auto">
                 {#each dictsNames as dictName, i (i)}
                     <li>
-                        <label class="inline-block px-3 py-1 clickable-light" for={dictName}>
+                        <label class="inline-block px-3 py-1 clickable-blue" for={dictName}>
                             <input
                                 id={dictName}
                                 name={dictName}

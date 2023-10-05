@@ -39,7 +39,7 @@
             <li>
                 <a
                     href="/dicts/{dictName}"
-                    class="flex items-center justify-center text-center w-full h-full clickable-light px-5 py-2"
+                    class="flex items-center justify-center text-center w-full h-full clickable-blue px-5 py-2"
                 >
                     {dictName}
                 </a>
@@ -49,7 +49,7 @@
         <li>
             <button
                 type="button"
-                class="flex w-full h-full clickable-light px-5 py-2"
+                class="flex w-full h-full clickable-blue px-5 py-2"
                 on:click={() => openFormCreateDict()}
             >
                 <span class="m-auto"> + </span>

@@ -4,10 +4,12 @@
 </script>
 
 <script lang="ts">
-    import Loader from "$lib/components/loader.svelte"
-    import SButton from "$lib/components/buttons/s-button.svelte"
     import { debounce } from "lodash-es"
     import api from "$api"
+    import Loader from "$lib/components/loader.svelte"
+    import SButton from "$lib/components/buttons/s-button.svelte"
+    import SvgRoot from "$lib/components/svg/svg-root.svelte"
+    import SearchIco from "$lib/components/svg/search-ico.svelte"
 
     let clazz = ""
     export { clazz as class }
@@ -81,7 +83,7 @@
                 <li
                     class="
             flex
-            py-2 px-0.5 clickable-light mb-1 rounded"
+            py-2 px-3 bg-slate-800 border border-slate-800 hover:border-slate-200 transition-all mb-1 rounded"
                 >
                     <a
                         class="block w-full flex-1"
@@ -100,13 +102,13 @@
       flex"
         >
             {#await p}
-                <Loader class="absolute -left-6 top-1 text-deepblue-500" width={20} />
+                <Loader class="absolute -left-6 top-1" width={20} />
             {/await}
 
             <input
                 type="text"
                 name="search"
-                class="text-deepblue-500 bg-transparent outline-0 border-b-2 border-deepblue-500 placeholder-deepblue-500/40"
+                class="bg-slate-800 outline-0 px-3 py-2 rounded placeholder-white/40"
                 bind:value={search}
                 maxlength="{MAX_SEARCH_LENGTH}"
                 autocomplete="off"
@@ -115,7 +117,9 @@
         </label>
 
         <SButton type="submit">
-            <span class="text-deepblue-500 font-bold text-md sm:text-lg uppercase"> look up </span>
+            <SvgRoot class="align-middle">
+                <SearchIco />
+            </SvgRoot>
         </SButton>
     </form>
 </div>
@@ -124,7 +128,7 @@
     .the-search-input {
         &__block-result-items {
             z-index: 10;
-            bottom: 40px;
+            bottom: 50px;
         }
     }
 </style>
