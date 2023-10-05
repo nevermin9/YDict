@@ -123,7 +123,7 @@
     .the-search-input {
         &__block-result-items {
             z-index: 10;
-            bottom: 30px;
+            bottom: 40px;
         }
     }
 </style>

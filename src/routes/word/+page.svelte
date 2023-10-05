@@ -2,11 +2,13 @@
     import type { PageData } from "./$types"
     import { teleport } from "$lib/utils/actions"
     import { copyObj } from "$lib/utils/helpers"
+    import { Word, Dictionary } from "$lib/utils/idb/models"
+    import { modalsRootContext, notificationsContext } from "$lib/context"
     import SButton from "$lib/components/buttons/s-button.svelte"
     import WordTitle from "$lib/components/word-def/word-title.svelte"
     import WordDefsList from "$lib/components/word-def/defs-list.svelte"
-    import { Word, Dictionary } from "$lib/utils/idb/models"
-    import { modalsRootContext, notificationsContext } from "$lib/context"
+    import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
+    import WordDef from "$lib/components/word-def/word-def.svelte"
 
     export let data: PageData
 
@@ -15,6 +17,8 @@
     const savedDefsObj = copyObj(data.wordFromDB?.data?.results || [])
     const savedDefs = savedDefsObj.map((def) => def.definition)
     const savedDefsLength = savedDefs.length
+    let checkedDefs: string[] = data.searchedWord?.results.map((def) => def.definition)
+        .filter((def) => savedDefs.includes(def))
     let shouldUpdate = false
     $: {
         if (isSaved
@@ -84,7 +88,18 @@
         pronunciation={data.searchedWord?.pronunciation?.all}
     />
 
-    <WordDefsList checkedDefsObj={savedDefsObj} bind:selectedDefs definitions={data.searchedWord?.results} />
+    <WordDefsList definitions={data.searchedWord?.results}>
+            <CheckboxContent
+                slot="def"
+                let:def
+                value={def.definition}
+                bind:group={selectedDefs}
+                checked={checkedDefs.includes(def.definition)}
+                class="flex items-start gap-2"
+            >
+                <WordDef wordDefinition={def} />
+            </CheckboxContent>
+    </WordDefsList>
 
     <div
         use:teleport={{targetId: "fixed-bottom", fixHeight: true}}

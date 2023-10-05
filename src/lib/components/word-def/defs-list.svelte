@@ -1,32 +1,17 @@
 <script lang="ts">
     import type { WordDefinition } from "$lib/types"
-    import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
-    import WordDef from "$lib/components/word-def/word-def.svelte"
 
     let clazz = ""
     export { clazz as class }
     export let definitions: WordDefinition[] = []
-    export let selectedDefs: string[] = []
-    export let checkedDefsObj: WordDefinition[] = []
-
-    let checkedDefs: string[] = definitions.map((def) => def.definition)
-        .filter((def) => checkedDefsObj.map((_cdef) => _cdef.definition).includes(def))
 </script>
 
-<ul class="{clazz}">
+<ul class="{clazz} flex flex-col gap-2">
     {#each definitions as def, i (i)}
-        <li class="mb-2">
-            <CheckboxContent
-                value={def.definition}
-                bind:group={selectedDefs}
-                checked={checkedDefs.includes(def.definition)}
-                class="flex items-start gap-2"
-            >
-                <WordDef wordDefinition={def} />
-            </CheckboxContent>
+        <li>
+            <slot name="def" {def} />
         </li>
-        {:else}
+    {:else}
         <li> No definitions found </li>
     {/each}
-
 </ul>

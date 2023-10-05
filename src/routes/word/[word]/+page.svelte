@@ -1,10 +1,9 @@
 <script lang="ts">
-    import CheckboxContent from "$lib/components/form/checkbox-content.svelte"
     import WordDef from "$lib/components/word-def/word-def.svelte"
     import WordTitle from "$lib/components/word-def/word-title.svelte"
+    import WordDefsList from "$lib/components/word-def/defs-list.svelte"
 
     export let data
-    let selectedDefs: string[] = []
 </script>
 
 <section>
@@ -17,15 +16,9 @@
             pronunciation={data.wordData.data?.pronunciation?.all}
         />
 
-        {#each data.wordData?.data.results as result, i (i)}
-            <CheckboxContent
-                value={result.definition}
-                bind:group={selectedDefs}
-                class="flex gap-2 max-w-screen-md m-auto mb-2"
-            >
-                <WordDef wordDefinition={result} />
-            </CheckboxContent>
-        {/each}
+        <WordDefsList definitions={data.wordData.data.results}>
+            <WordDef slot="def" let:def wordDefinition={def} />
+        </WordDefsList>
     {/if}
 
     <div>
