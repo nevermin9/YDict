@@ -81,7 +81,7 @@
                 <li
                     class="
             flex
-            py-2 px-0.5 clickable-light mb-1 rounded"
+            py-2 px-0.5 clickable-blue mb-1 rounded"
                 >
                     <a
                         class="block w-full flex-1"
@@ -100,13 +100,13 @@
       flex"
         >
             {#await p}
-                <Loader class="absolute -left-6 top-1 text-deepblue-500" width={20} />
+                <Loader class="absolute -left-6 top-1" width={20} />
             {/await}
 
             <input
                 type="text"
                 name="search"
-                class="text-deepblue-500 bg-transparent outline-0 border-b-2 border-deepblue-500 placeholder-deepblue-500/40"
+                class="bg-slate-800 outline-0 px-3 py-2 rounded placeholder-white/40"
                 bind:value={search}
                 maxlength="{MAX_SEARCH_LENGTH}"
                 autocomplete="off"
@@ -115,7 +115,7 @@
         </label>
 
         <SButton type="submit">
-            <span class="text-deepblue-500 font-bold text-md sm:text-lg uppercase"> look up </span>
+            <span class="font-bold text-md sm:text-lg uppercase"> look up </span>
         </SButton>
     </form>
 </div>

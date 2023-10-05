@@ -1,6 +1,6 @@
-<script>
-    export let type = "button"
-    export let theme = "light"
+<script lang="ts">
+    export let type: "submit" | "button" | "reset" = "button"
+    export let theme = "blue"
     let clazz = ""
     export { clazz as class }
     export let disabled = false
