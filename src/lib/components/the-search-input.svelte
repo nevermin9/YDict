@@ -108,7 +108,7 @@
             <input
                 type="text"
                 name="search"
-                class="bg-slate-800 outline-0 px-3 py-2 rounded placeholder-white/40"
+                class="bg-slate-800 outline-0 px-3 py-2 rounded shadow placeholder-white/40"
                 bind:value={search}
                 maxlength="{MAX_SEARCH_LENGTH}"
                 autocomplete="off"
@@ -116,7 +116,7 @@
             />
         </label>
 
-        <SButton type="submit">
+        <SButton class="shadow" type="submit">
             <SvgRoot class="align-middle">
                 <SearchIco />
             </SvgRoot>

@@ -1,7 +1,4 @@
 <script lang="ts" context="module">
-    // import CardIco from "$lib/components/svg/card-ico.svelte"
-    import DictIco from "$lib/components/svg/dict-ico.svelte"
-    import HomeIco from "$lib/components/svg/home-ico.svelte"
 
     type MenuItem = {
         id: string
@@ -37,7 +34,11 @@
 </script>
 
 <script lang="ts">
+    // import CardIco from "$lib/components/svg/card-ico.svelte"
     import SvgRoot from "$lib/components/svg/svg-root.svelte"
+    import DictIco from "$lib/components/svg/dict-ico.svelte"
+    import HomeIco from "$lib/components/svg/home-ico.svelte"
+    import { page } from "$app/stores"
 
     let clazz = ""
 
@@ -49,7 +50,7 @@
     fixed z-7777 top-0 left-1/2 -translate-x-1/2
     w-full max-w-md p-1 pt-2"
     >
-        <nav class="the-header__nav shadow-xl w-full h-full">
+        <nav class="the-header__nav w-full h-full">
             <ul
                 class="
         the-header__nav-list
@@ -63,20 +64,19 @@
               w-full h-full
               p-0.5 text-xs
               rounded
-              border-deepblue-500
-              border
-              bg-sand-300
-              shadow-md"
+              bg-slate-800
+              shadow"
                     >
                         <a
                             href={item.href}
                             class="
-                the-header__nav-list-link
-                flex flex-col
-                w-full h-full
-                active:shadow-inner
-                text-deepblue-500
-                 items-center justify-center"
+                                the-header__nav-list-link
+                                flex flex-col
+                                w-full h-full
+                                active:shadow-inner
+                                items-center justify-center
+                                {item.itIsMe($page.url.pathname) ? 'text-blue-600' : ''}
+                            "
                         >
                             <SvgRoot class="the-header__svg-root" width="24" height="24">
                                 <svelte:component this={item.icon} />
